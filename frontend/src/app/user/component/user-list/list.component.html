@@ -4,17 +4,32 @@
       <el-button (click)="add()" size="mini" type="primary">添加</el-button>
     </div>
   </div>
-  <div class="viewMain">
+  <div class="viewMain" [el-loading]="loading" [text]="'拼命加载中'">
+    <div class="noData" *ngIf="!list.length">
+      <span>没有数据...</span>
+    </div>
     <table class="zwTable">
       <tr>
-        <th>名称</th>
+        <th>登录名</th>
+        <th>用户名</th>
+        <th>状态</th>
         <th>操作</th>
       </tr>
       <tr *ngFor="let item of list let i=index">
-        <td>{{item.name}}</td>
+        <td>{{item.login_name}}</td>
+        <td>{{item.user_name}}</td>
+        <td  class="el-tag-box">
+          <el-tag *ngIf="item.user_status==1" type="success">启用</el-tag>
+          <el-tag *ngIf="item.user_status!=1" type="warning">禁用</el-tag>
+        </td>
 
         <td style="width: 180px; text-align: center;">
-          <el-button (click)="del(item.id)" size="mini" type="warning" icon="delete" [plain]="true">删除</el-button>
+          <el-button *ngIf="item.user_status==1" (click)="del(item.id,0)" size="mini" type="warning"
+                     icon="circle-close" [plain]="true">禁用
+          </el-button>
+          <el-button *ngIf="item.user_status!=1" (click)="del(item.id,1)" size="mini" type="primary" icon="circle-check"
+                     [plain]="true">启用
+          </el-button>
           <el-button (click)="add(item)" size="mini" type="success" icon="edit" [plain]="true">编辑</el-button>
         </td>
       </tr>

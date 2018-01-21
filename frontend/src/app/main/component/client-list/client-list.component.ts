@@ -11,6 +11,7 @@ export class ClientListComponent implements OnInit {
   list = [];
   total = 0;
   pageNum = 1;
+  loading = false;
 
   constructor(private clientService: ClientService,
               private router: Router) {
@@ -25,14 +26,14 @@ export class ClientListComponent implements OnInit {
   }
 
   getList() {
-
-
+    this.loading = true;
     (this.clientService as any).list({
       pageNum: this.pageNum,
       pageSize: 10,
       search: ''
     }, {})
       .then(response => {
+        this.loading = false;
         const rep = (response as any);
         if (rep.code == 0) {
           this.total = response.pageCount;
@@ -46,8 +47,8 @@ export class ClientListComponent implements OnInit {
 
   verify(id) {
     (this.clientService as any).verify({
-      id:id,
-      op_name:localStorage.getItem('userName')||'zhaoyu'
+      id: id,
+      op_name: localStorage.getItem('userName') || 'zhaoyu'
     })
       .then(response => {
         const rep = (response as any);

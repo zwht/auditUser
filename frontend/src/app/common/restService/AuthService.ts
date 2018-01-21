@@ -1,9 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import HandleError from './../../common/service/HandleError';
-
-import {LoginVo} from '../../common/class/LoginVo';
-
 @Injectable()
 export class AuthService {
   constructor(private http: Http) {

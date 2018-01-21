@@ -4,7 +4,10 @@
       <el-button (click)="add()" size="mini" type="primary">添加</el-button>
     </div>
   </div>
-  <div class="viewMain">
+  <div class="viewMain"  [el-loading]="loading" [text]="'拼命加载中'">
+    <div class="noData" *ngIf="!list.length">
+      <span>没有数据...</span>
+    </div>
     <table class="zwTable">
       <tr>
         <th>车主姓名</th>
@@ -35,9 +38,10 @@
         </td>
         <td>{{item.op_time}}</td>
         <td>{{item.op_name}}</td>
-        <td style="width: 180px; text-align: center;">
-          <el-button (click)="add(item)" size="mini" type="success" icon="edit">编辑</el-button>
-          <el-button (click)="verify(item.id)" size="mini" type="success" icon="edit">审核</el-button>
+        <td style="width: 200px;">
+          <el-button (click)="add(item)" size="mini" type="success" icon="edit" [plain]="true">编辑</el-button>
+          <el-button *ngIf="item.op_flag!=1" (click)="verify(item.id)" size="mini"  type="primary" icon="circle-check"
+                     [plain]="true">审核通过</el-button>
         </td>
       </tr>
     </table>

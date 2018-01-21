@@ -1,8 +1,9 @@
 import {LoginComponent} from './component/login/login.component';
 import {NotFoundComponent} from './component/not-found/not-found.component';
-import {MenuComponent} from '../main/component/menu/menu.component';
-import {ClientListComponent} from '../main/component/client-list/client-list.component';
-import {LogListComponent} from '../main/component/log-list/log-list.component';
+import {MenuComponent} from './component/menu/menu.component';
+import {ClientListComponent} from './component/client-list/client-list.component';
+import {LogListComponent} from './component/log-list/log-list.component';
+
 
 export const mainRoutes = [
   {

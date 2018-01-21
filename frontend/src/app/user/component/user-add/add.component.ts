@@ -4,7 +4,7 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
-  styleUrls: ['./add.component.css'],
+  styleUrls: ['./add.component.less'],
   providers: [UserService]
 })
 export class AddComponent implements OnInit {

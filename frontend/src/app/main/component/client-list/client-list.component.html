@@ -1,8 +1,7 @@
 <div class="clientList viewBox">
   <div class="zwSearch">
     <div class="right">
-      <el-button *ngIf="userType!=2" (click)="add()" size="mini" type="primary">添加</el-button>
-    </div>
+      <!--<el-button *ngIf="userType!=2" (click)="add()" size="mini" type="primary">添加</el-button>--></div>
   </div>
   <div class="viewMain"  [el-loading]="loading" [text]="'拼命加载中'">
     <div class="noData" *ngIf="!list.length">
@@ -38,8 +37,7 @@
         </td>
         <td>{{item.op_time}}</td>
         <td>{{item.op_name}}</td>
-        <td style="width: 200px;" *ngIf="userType!=2">
-          <el-button (click)="add(item)" size="mini" type="success" icon="edit" [plain]="true">编辑</el-button>
+        <td style="width: 120px; text-align: center;" *ngIf="userType!=2">
           <el-button *ngIf="item.op_flag!=1" (click)="verify(item.id)" size="mini"  type="primary" icon="circle-check"
                      [plain]="true">审核通过</el-button>
         </td>

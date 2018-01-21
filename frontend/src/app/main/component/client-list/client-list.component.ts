@@ -11,7 +11,7 @@ export class ClientListComponent implements OnInit {
   list = [];
   total = 0;
   pageNum = 1;
-  pageSize = 10;
+  pageSize = 20;
   loading = false;
   userType = localStorage.getItem('userType');
   constructor(private clientService: ClientService,

@@ -24,10 +24,10 @@
         </td>
 
         <td style="width: 180px; text-align: center;">
-          <el-button *ngIf="item.user_status==1" (click)="del(item.id,0)" size="mini" type="warning"
+          <el-button *ngIf="item.user_status==1" (click)="del(item,0)" size="mini" type="warning"
                      icon="circle-close" [plain]="true">禁用
           </el-button>
-          <el-button *ngIf="item.user_status!=1" (click)="del(item.id,1)" size="mini" type="primary" icon="circle-check"
+          <el-button *ngIf="item.user_status!=1" (click)="del(item,1)" size="mini" type="primary" icon="circle-check"
                      [plain]="true">启用
           </el-button>
           <el-button (click)="add(item)" size="mini" type="success" icon="edit" [plain]="true">编辑</el-button>

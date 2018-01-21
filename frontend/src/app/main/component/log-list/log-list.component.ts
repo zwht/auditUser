@@ -11,7 +11,7 @@ export class LogListComponent implements OnInit {
   list = [];
   total = 0;
   pageNum = 1;
-  pageSize = 10;
+  pageSize = 20;
   loading = false;
 
   constructor(private logService: LogService,

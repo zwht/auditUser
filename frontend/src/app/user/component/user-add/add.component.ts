@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../../common/restService/UserService';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {Md5} from "ts-md5/dist/md5";
+import { ElMessageService } from 'element-angular'
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
@@ -45,6 +46,7 @@ export class AddComponent implements OnInit {
 
   constructor(private userService: UserService,
               private router: Router,
+              private message: ElMessageService,
               private activatedRoute: ActivatedRoute) {
   }
 
@@ -77,8 +79,8 @@ export class AddComponent implements OnInit {
     (this.userService as any).getById(this.user.id)
       .then(response => {
         const rep = (response as any);
-        if (rep.code === 200) {
-          this.user = rep.data;
+        if (rep.code ==0) {
+          this.user = rep;
         } else {
         }
       });
@@ -88,6 +90,20 @@ export class AddComponent implements OnInit {
   save() {
     if (this.user.id) {
 
+      (this.userService as any).edit_user_info({
+        id:this.user.id,
+        user_name: this.user.user_name,
+        user_type: this.user.user_type,
+        user_status: this.user.user_status
+      })
+        .then(response => {
+          const rep = (response as any);
+          if (rep.code == 0) {
+            window.history.back()
+          } else {
+            console.log(response);
+          }
+        });
     } else {
       (this.userService as any).add({
         login_name: this.user.login_name,
@@ -100,7 +116,9 @@ export class AddComponent implements OnInit {
           const rep = (response as any);
           if (rep.code == 0) {
             window.history.back()
-          } else {
+          } else if(rep.code == 10006){
+            this.message.error('添加失败，登录名重复');
+          }else {
             console.log(response);
           }
         });

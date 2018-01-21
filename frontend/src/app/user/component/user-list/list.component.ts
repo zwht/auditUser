@@ -12,7 +12,7 @@ export class ListComponent implements OnInit {
   total = 0;
   pageNum = 1;
   userType = 2;
-  pageSize = 10;
+  pageSize = 20;
   loading = false;
 
   constructor(private userService: UserService,
@@ -21,10 +21,12 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit() {
-    switch (this.router.url){
-      case '/admin/user/admin':this.userType = 0;
+    switch (this.router.url) {
+      case '/admin/user/admin':
+        this.userType = 0;
         break;
-      case '/admin/user/audit':this.userType = 1;
+      case '/admin/user/audit':
+        this.userType = 1;
         break;
     }
     this.activatedRoute.queryParams.subscribe((params: Params) => {
@@ -34,7 +36,7 @@ export class ListComponent implements OnInit {
   }
 
   add(item) {
-    this.router.navigate(['/admin/user/add',this.userType], {
+    this.router.navigate(['/admin/user/add', this.userType], {
       queryParams: {id: item ? item.id : ''}
     });
 
@@ -45,7 +47,8 @@ export class ListComponent implements OnInit {
     (this.userService as any).list({
       pageNum: this.pageNum,
       pageSize: this.pageSize,
-      search: this.userType
+      userType: this.userType,
+      search: ''
     }, {})
       .then(response => {
         this.loading = false;
@@ -59,11 +62,17 @@ export class ListComponent implements OnInit {
       });
   }
 
-  del(id) {
-    (this.userService as any).del(id)
+  del(item, key) {
+    this.loading = true;
+    (this.userService as any).edit_user_info({
+      user_status: key,
+      id: item.id,
+      user_name: item.user_name,
+      user_type: item.user_type
+    })
       .then(response => {
         const rep = (response as any);
-        if (rep.code === 200) {
+        if (rep.code == 0) {
           this.getList();
         } else {
           console.log(response);

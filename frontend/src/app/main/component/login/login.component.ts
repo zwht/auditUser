@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {LoginVo} from '../../../common/class/LoginVo';
 import {AuthService} from '../../../common/restService/AuthService';
 import {Md5} from "ts-md5/dist/md5";
+import { ElMessageService } from 'element-angular'
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -16,6 +17,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private http: Http,
               private router: Router,
+              private message: ElMessageService,
               private authService: AuthService) {
   }
 
@@ -47,7 +49,9 @@ export class LoginComponent implements OnInit {
               break;
           }
 
-        } else {
+        } else if(rep.code == 10001){
+          this.message.error('账号密码不正确，或者账号已被停用');
+        }else {
           console.log(data);
         }
       });

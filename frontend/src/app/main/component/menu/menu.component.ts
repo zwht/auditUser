@@ -30,9 +30,11 @@ export class MenuComponent implements OnInit {
     this.router.config[1].children.forEach(item => {
 
       if (item.data.type) {
-        const key = false;
+        let key = false;
         item.data.type.forEach(ob1 => {
-          if (ob1 == userType) key = true;
+          if (ob1 == userType) {
+            key = true;
+          }
         });
         if (!key) return;
       }

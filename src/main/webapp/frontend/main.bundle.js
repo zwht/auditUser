@@ -257,14 +257,14 @@ var AuthService = (function () {
         this.url = '/api/';
     }
     AuthService.prototype.login = function (loginVo) {
-        return this.http.post(this.url + 'login', JSON.stringify(loginVo))
+        return this.http.post(this.url + 'login', $.param(loginVo))
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(__WEBPACK_IMPORTED_MODULE_2__common_service_HandleError__["a" /* default */]);
     };
     // 注销
     AuthService.prototype.logout = function (userId) {
-        return this.http.post(this.url + 'logout', JSON.stringify({ userId: userId }))
+        return this.http.post(this.url + 'logout', $.param({ userId: userId }))
             .toPromise()
             .then(function () { return null; })
             .catch(__WEBPACK_IMPORTED_MODULE_2__common_service_HandleError__["a" /* default */]);
@@ -311,7 +311,7 @@ var ClientService = (function () {
     }
     // 添加
     ClientService.prototype.add = function (color) {
-        return this.http.post(this.url + 'add', JSON.stringify(color))
+        return this.http.post(this.url + 'add', $.param(color))
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(__WEBPACK_IMPORTED_MODULE_2__service_HandleError__["a" /* default */]);
@@ -338,7 +338,7 @@ var ClientService = (function () {
             .catch(__WEBPACK_IMPORTED_MODULE_2__service_HandleError__["a" /* default */]);
     };
     ClientService.prototype.update = function (color) {
-        return this.http.post(this.url + 'update', JSON.stringify(color))
+        return this.http.post(this.url + 'update', $.param(color))
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(__WEBPACK_IMPORTED_MODULE_2__service_HandleError__["a" /* default */]);
@@ -437,7 +437,7 @@ var LogService = (function () {
     }
     // 添加
     LogService.prototype.add = function (gx) {
-        return this.http.post(this.url + 'add', JSON.stringify(gx))
+        return this.http.post(this.url + 'add', $.param(gx))
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(__WEBPACK_IMPORTED_MODULE_2__service_HandleError__["a" /* default */]);
@@ -457,7 +457,7 @@ var LogService = (function () {
             .catch(__WEBPACK_IMPORTED_MODULE_2__service_HandleError__["a" /* default */]);
     };
     LogService.prototype.update = function (gx) {
-        return this.http.post(this.url + 'update', JSON.stringify(gx))
+        return this.http.post(this.url + 'update', $.param(gx))
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(__WEBPACK_IMPORTED_MODULE_2__service_HandleError__["a" /* default */]);
@@ -525,7 +525,14 @@ var UserService = (function () {
     };
     // 添加用户
     UserService.prototype.add = function (user) {
-        return this.http.post(this.url + 'add_user', JSON.stringify(user))
+        return this.http.post(this.url + 'add_user', $.param(user))
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(__WEBPACK_IMPORTED_MODULE_2__common_service_HandleError__["a" /* default */]);
+    };
+    // 添加用户
+    UserService.prototype.change_pwd = function (user) {
+        return this.http.post(this.url + 'change_pwd', $.param(user))
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(__WEBPACK_IMPORTED_MODULE_2__common_service_HandleError__["a" /* default */]);
@@ -652,7 +659,8 @@ var HttpInterceptorService = (function (_super) {
         if (options.headers == null) {
             options.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]();
         }
-        options.headers.append('Content-Type', 'application/json; charset=utf-8');
+        // options.headers.append('Content-Type', 'application/json; charset=utf-8');
+        options.headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
         options.headers.append('Authorization', localStorage.getItem('token'));
         return options;
     };
@@ -758,7 +766,7 @@ var SharedModule = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
             imports: [
                 __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
-                __WEBPACK_IMPORTED_MODULE_2_element_angular__["a" /* ElModule */].forRoot()
+                __WEBPACK_IMPORTED_MODULE_2_element_angular__["b" /* ElModule */].forRoot()
             ],
             declarations: [__WEBPACK_IMPORTED_MODULE_3__components_cropper_img_cropper_img_component__["a" /* CropperImgComponent */]],
             exports: [__WEBPACK_IMPORTED_MODULE_3__components_cropper_img_cropper_img_component__["a" /* CropperImgComponent */]],
@@ -834,10 +842,125 @@ var AppComponent = (function () {
 
 /***/ }),
 
+/***/ "../../../../../src/app/main/component/client-add/client-add.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"clientAdd viewBox\">\n  <div class=\"zwSearch\">\n    <div class=\"left\">\n      <span>{{title}}</span>\n    </div>\n    <div class=\"right\">\n    </div>\n  </div>\n  <div class=\"viewMain\">\n    <div class=\"addFrom\">\n      <label>\n        <span>名&nbsp;&nbsp;&nbsp;称：</span>\n        <el-input [(ngModel)]=\"user.user_name\" placeholder=\"请输入用户名\"></el-input>\n      </label>\n      <label>\n        <span>密&nbsp;&nbsp;&nbsp;码：</span>\n        <el-input [(ngModel)]=\"user.login_pwd\" placeholder=\"请输入密码\" native-type=\"password\"></el-input>\n      </label>\n      <label>\n        <span>登录名：</span>\n        <el-input [(ngModel)]=\"user.login_name\" placeholder=\"请输入登录名\"></el-input>\n      </label>\n      <!--<label>\n        <span>类&nbsp;&nbsp;&nbsp;型：</span>\n        <el-select [(model)]=\"user.user_type\" placeholder=\"请选择\">\n          <el-option *ngFor=\"let item of userTypeList\"\n                     [label]=\"item.name\"\n                     [value]=\"item.value\">\n          </el-option>\n        </el-select>\n      </label>-->\n      <br>\n      <el-button (click)=\"save()\" [plain]=\"true\" type=\"success\">保存</el-button>\n    </div>\n  </div>\n</div>\n\n\n\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/main/component/client-add/client-add.component.less":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".clientAdd .addFrom {\n  width: 500px;\n  margin: 0 auto;\n}\n.clientAdd .addFrom label {\n  display: block;\n  margin: 10px 0;\n}\n.clientAdd .addFrom label el-input,\n.clientAdd .addFrom label el-select {\n  width: 300px;\n  display: inline-block;\n}\n.clientAdd .addFrom label /deep/ .el-select {\n  width: 300px;\n}\n.clientAdd .addFrom /deep/ button {\n  width: 360px;\n}\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/main/component/client-add/client-add.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ClientAddComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__common_restService_ClientService__ = __webpack_require__("../../../../../src/app/common/restService/ClientService.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var ClientAddComponent = (function () {
+    function ClientAddComponent(clientService, router, activatedRoute) {
+        this.clientService = clientService;
+        this.router = router;
+        this.activatedRoute = activatedRoute;
+        this.user = {
+            id: null,
+            login_name: null,
+            login_pwd: null,
+            user_name: null,
+            user_type: null
+        };
+        this.title = '';
+    }
+    ClientAddComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.activatedRoute.queryParams.subscribe(function (params) {
+            _this.user.id = params['id'];
+            if (_this.user.id) {
+                _this.getById();
+            }
+        });
+    };
+    ClientAddComponent.prototype.getById = function () {
+        var _this = this;
+        this.clientService.getById(this.user.id)
+            .then(function (response) {
+            var rep = response;
+            if (rep.code === 200) {
+                _this.user = rep.data;
+            }
+            else {
+            }
+        });
+    };
+    ClientAddComponent.prototype.save = function () {
+        this.clientService.add({
+            login_name: this.user.login_name,
+            login_pwd: this.user.login_pwd,
+            user_name: this.user.user_name,
+            user_type: this.user.user_type
+        })
+            .then(function (response) {
+            var rep = response;
+            if (rep.code == 0) {
+                window.history.back();
+            }
+            else {
+                console.log(response);
+            }
+        });
+    };
+    ClientAddComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'client-add',
+            template: __webpack_require__("../../../../../src/app/main/component/client-add/client-add.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/main/component/client-add/client-add.component.less")],
+            providers: [__WEBPACK_IMPORTED_MODULE_1__common_restService_ClientService__["a" /* ClientService */]]
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__common_restService_ClientService__["a" /* ClientService */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]])
+    ], ClientAddComponent);
+    return ClientAddComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "../../../../../src/app/main/component/client-list/client-list.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"clientList viewBox\">\n  <div class=\"zwSearch\">\n    <div class=\"right\">\n      <el-button (click)=\"add()\" size=\"mini\" type=\"primary\">添加</el-button>\n    </div>\n  </div>\n  <div class=\"viewMain\"  [el-loading]=\"loading\" [text]=\"'拼命加载中'\">\n    <div class=\"noData\" *ngIf=\"!list.length\">\n      <span>没有数据...</span>\n    </div>\n    <table class=\"zwTable\">\n      <tr>\n        <th>车主姓名</th>\n        <th>用户住址</th>\n        <th>身份证</th>\n        <th>车主电话</th>\n        <th>品牌</th>\n        <th>车辆类型</th>\n        <th>颜色</th>\n        <th>车牌号</th>\n        <th>审核</th>\n        <th>审核时间</th>\n        <th>审核人</th>\n        <th>操作</th>\n      </tr>\n      <tr *ngFor=\"let item of list let i=index\">\n        <td>{{item.contact}}</td>\n        <td>{{item.address}}</td>\n        <td>{{item.idcard}}</td>\n        <td>{{item.contacttel}}</td>\n        <td>{{item.brand}}</td>\n        <td>{{item.cartype}}</td>\n        <td>{{item.color}}</td>\n        <td>{{item.licenseplate}}</td>\n        <td class=\"el-tag-box\">\n          <el-tag *ngIf=\"item.op_flag==1\" type=\"success\">已审核</el-tag>\n          <el-tag *ngIf=\"item.op_flag!=1\" type=\"warning\">未审核</el-tag>\n        </td>\n        <td>{{item.op_time}}</td>\n        <td>{{item.op_name}}</td>\n        <td style=\"width: 200px;\">\n          <el-button (click)=\"add(item)\" size=\"mini\" type=\"success\" icon=\"edit\" [plain]=\"true\">编辑</el-button>\n          <el-button *ngIf=\"item.op_flag!=1\" (click)=\"verify(item.id)\" size=\"mini\"  type=\"primary\" icon=\"circle-check\"\n                     [plain]=\"true\">审核通过</el-button>\n        </td>\n      </tr>\n    </table>\n    <div class=\"pageBox\">\n      <el-pagination *ngIf=\"total\" [total]=\"total\"\n                     [page-size]=\"20\"\n                     [(model)]=\"pageNum\"\n                     (modelChange)=\"getList()\"\n                     [layout]=\"['prev', 'pager', 'next', 'jumper', 'total']\">\n      </el-pagination>\n    </div>\n\n  </div>\n</div>\n\n\n"
+module.exports = "<div class=\"clientList viewBox\">\n  <div class=\"zwSearch\">\n    <div class=\"right\">\n      <el-button *ngIf=\"userType!=2\" (click)=\"add()\" size=\"mini\" type=\"primary\">添加</el-button>\n    </div>\n  </div>\n  <div class=\"viewMain\"  [el-loading]=\"loading\" [text]=\"'拼命加载中'\">\n    <div class=\"noData\" *ngIf=\"!list.length\">\n      <span>没有数据...</span>\n    </div>\n    <table class=\"zwTable\">\n      <tr>\n        <th>车主姓名</th>\n        <th>用户住址</th>\n        <th>身份证</th>\n        <th>车主电话</th>\n        <th>品牌</th>\n        <th>车辆类型</th>\n        <th>颜色</th>\n        <th>车牌号</th>\n        <th>审核</th>\n        <th>审核时间</th>\n        <th>审核人</th>\n        <th *ngIf=\"userType!=2\">操作</th>\n      </tr>\n      <tr *ngFor=\"let item of list let i=index\">\n        <td>{{item.contact}}</td>\n        <td>{{item.address}}</td>\n        <td>{{item.idcard}}</td>\n        <td>{{item.contacttel}}</td>\n        <td>{{item.brand}}</td>\n        <td>{{item.cartype}}</td>\n        <td>{{item.color}}</td>\n        <td>{{item.licenseplate}}</td>\n        <td class=\"el-tag-box\">\n          <el-tag *ngIf=\"item.op_flag==1\" type=\"success\">已审核</el-tag>\n          <el-tag *ngIf=\"item.op_flag!=1\" type=\"warning\">未审核</el-tag>\n        </td>\n        <td>{{item.op_time}}</td>\n        <td>{{item.op_name}}</td>\n        <td style=\"width: 200px;\" *ngIf=\"userType!=2\">\n          <el-button (click)=\"add(item)\" size=\"mini\" type=\"success\" icon=\"edit\" [plain]=\"true\">编辑</el-button>\n          <el-button *ngIf=\"item.op_flag!=1\" (click)=\"verify(item.id)\" size=\"mini\"  type=\"primary\" icon=\"circle-check\"\n                     [plain]=\"true\">审核通过</el-button>\n        </td>\n      </tr>\n    </table>\n    <div class=\"pageBox\">\n      <el-pagination *ngIf=\"total\" [total]=\"total\"\n                     [page-size]=\"20\"\n                     [(model)]=\"pageNum\"\n                     (modelChange)=\"getList()\"\n                     [layout]=\"['prev', 'pager', 'next', 'jumper', 'total']\">\n      </el-pagination>\n    </div>\n\n  </div>\n</div>\n\n\n"
 
 /***/ }),
 
@@ -849,7 +972,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, ".clientList .el-tag-box /deep/ .el-tag {\n  border-radius: 20px;\n  height: 20px;\n  line-height: 20px;\n}\n", ""]);
 
 // exports
 
@@ -887,12 +1010,13 @@ var ClientListComponent = (function () {
         this.total = 0;
         this.pageNum = 1;
         this.loading = false;
+        this.userType = localStorage.getItem('userType');
     }
     ClientListComponent.prototype.ngOnInit = function () {
         this.getList();
     };
     ClientListComponent.prototype.add = function (item) {
-        this.router.navigate(['/admin/user/add'], { queryParams: { id: item ? item.id : '' } });
+        this.router.navigate(['/admin/client/add'], { queryParams: { id: item ? item.id : '' } });
     };
     ClientListComponent.prototype.getList = function () {
         var _this = this;
@@ -1096,6 +1220,8 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__common_class_LoginVo__ = __webpack_require__("../../../../../src/app/common/class/LoginVo.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__common_restService_AuthService__ = __webpack_require__("../../../../../src/app/common/restService/AuthService.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ts_md5_dist_md5__ = __webpack_require__("../../../../ts-md5/dist/md5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ts_md5_dist_md5___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_ts_md5_dist_md5__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1105,6 +1231,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -1124,21 +1251,31 @@ var LoginComponent = (function () {
         var _this = this;
         this.authService.login({
             login_name: this.login.name,
-            login_pwd: this.login.password
+            login_pwd: __WEBPACK_IMPORTED_MODULE_5_ts_md5_dist_md5__["Md5"].hashStr(this.login.password)
         })
             .then(function (response) {
             var rep = response;
             if (rep.code == 0) {
-                localStorage.setItem('userName', _this.login.name);
-                localStorage.setItem('token', rep.data.token);
-                _this.router.navigateByUrl('/admin/user');
+                localStorage.setItem('userLoginName', _this.login.name);
+                localStorage.setItem('userName', rep.user_name);
+                localStorage.setItem('userType', rep.user_type);
+                //localStorage.setItem('token', rep.data.token);
+                switch (rep.user_type) {
+                    case '1':
+                        _this.router.navigateByUrl('/admin/client');
+                        break;
+                    case '0':
+                        _this.router.navigateByUrl('/admin/user/audit');
+                        break;
+                    case '2':
+                        _this.router.navigateByUrl('/admin/user/audit');
+                        break;
+                }
             }
             else {
                 console.log(data);
             }
         });
-        localStorage.setItem('userName', this.login.name);
-        this.router.navigateByUrl('/admin/user');
     };
     LoginComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -1212,7 +1349,7 @@ var MenuComponent = (function () {
         this.rightDown = [
             {
                 value: 'my',
-                label: '个人中心',
+                label: '修改密码',
             },
             {
                 value: 'exit',
@@ -1222,7 +1359,18 @@ var MenuComponent = (function () {
     }
     MenuComponent.prototype.ngOnInit = function () {
         var _this = this;
+        var userType = localStorage.getItem('userType');
         this.router.config[1].children.forEach(function (item) {
+            if (item.data.type) {
+                var key_1 = false;
+                item.data.type.forEach(function (ob1) {
+                    if (ob1 == userType) {
+                        key_1 = true;
+                    }
+                });
+                if (!key_1)
+                    return;
+            }
             if (item.data && item.data.menu) {
                 var itemMenu_1 = { path: item.path, name: item.data.name, children: [] };
                 _this.routesMenu.forEach(function (subItem) {
@@ -1245,12 +1393,13 @@ var MenuComponent = (function () {
     MenuComponent.prototype.downChange = function (data) {
         switch (data.value) {
             case 'my': {
+                this.router.navigate(['/admin/user/detail']);
                 break;
             }
             case 'exit': {
                 localStorage.removeItem('token');
                 localStorage.removeItem('userName');
-                window.location.href = '#';
+                this.router.navigate(['/']);
                 break;
             }
         }
@@ -1374,6 +1523,109 @@ var NotFoundComponent = (function () {
 
 /***/ }),
 
+/***/ "../../../../../src/app/main/component/user-detail/user-detail.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"userDetial viewBox\">\n  <div class=\"zwSearch\">\n    <div class=\"left\">\n      <span>{{title}}</span>\n    </div>\n    <div class=\"right\">\n    </div>\n  </div>\n  <div class=\"viewMain\">\n    <div class=\"addFrom\">\n      <label>\n        <span>登&nbsp;&nbsp;录&nbsp;&nbsp;名：</span>\n        <el-input [elDisabled]=\"true\" [(ngModel)]=\"user.login_name\" placeholder=\"请输入登录名\"></el-input>\n      </label>\n      <label>\n        <span>密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：</span>\n        <el-input [(ngModel)]=\"user.login_pwd\" placeholder=\"请输入密码\" native-type=\"password\"></el-input>\n      </label>\n      <label>\n        <span>再次输入：</span>\n        <el-input [(ngModel)]=\"user.login_pwd1\" placeholder=\"请输入密码\" native-type=\"password\"></el-input>\n      </label>\n      <br>\n      <el-button (click)=\"save()\" [plain]=\"true\" type=\"success\">保存</el-button>\n    </div>\n  </div>\n</div>\n\n\n\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/main/component/user-detail/user-detail.component.less":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".userDetial .addFrom {\n  width: 500px;\n  margin: 0 auto;\n}\n.userDetial .addFrom label {\n  display: block;\n  margin: 10px 0;\n}\n.userDetial .addFrom label el-input,\n.userDetial .addFrom label el-select {\n  width: 300px;\n  display: inline-block;\n}\n.userDetial .addFrom label /deep/ .el-select {\n  width: 300px;\n}\n.userDetial .addFrom /deep/ button {\n  width: 360px;\n}\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/main/component/user-detail/user-detail.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserDetailComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__common_restService_UserService__ = __webpack_require__("../../../../../src/app/common/restService/UserService.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_element_angular__ = __webpack_require__("../../../../element-angular/release/element-angular.module.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ts_md5_dist_md5__ = __webpack_require__("../../../../ts-md5/dist/md5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ts_md5_dist_md5___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_ts_md5_dist_md5__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var UserDetailComponent = (function () {
+    function UserDetailComponent(userService, message, router, activatedRoute) {
+        this.userService = userService;
+        this.message = message;
+        this.router = router;
+        this.activatedRoute = activatedRoute;
+        this.user = {
+            login_name: localStorage.getItem('userLoginName'),
+            login_pwd: null,
+            login_pwd1: null
+        };
+        this.title = '';
+    }
+    UserDetailComponent.prototype.ngOnInit = function () {
+    };
+    UserDetailComponent.prototype.save = function () {
+        if (this.user.login_pwd != this.user.login_pwd1) {
+            this.message.error('两次密码不匹配');
+            return;
+        }
+        this.userService.change_pwd({
+            login_name: this.user.login_name,
+            login_pwd: __WEBPACK_IMPORTED_MODULE_4_ts_md5_dist_md5__["Md5"].hashStr(this.user.login_pwd)
+        })
+            .then(function (response) {
+            var rep = response;
+            if (rep.code == 0) {
+                window.history.back();
+            }
+            else {
+                console.log(response);
+            }
+        });
+    };
+    UserDetailComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'app-user-detail',
+            template: __webpack_require__("../../../../../src/app/main/component/user-detail/user-detail.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/main/component/user-detail/user-detail.component.less")],
+            providers: [__WEBPACK_IMPORTED_MODULE_1__common_restService_UserService__["a" /* UserService */]]
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__common_restService_UserService__["a" /* UserService */],
+            __WEBPACK_IMPORTED_MODULE_3_element_angular__["a" /* ElMessageService */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]])
+    ], UserDetailComponent);
+    return UserDetailComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "../../../../../src/app/main/main.module.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1414,7 +1666,7 @@ var MainModule = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["J" /* NgModule */])({
             declarations: [].concat([__WEBPACK_IMPORTED_MODULE_9__component_app_app_component__["a" /* AppComponent */]], __WEBPACK_IMPORTED_MODULE_10__main_routes__["a" /* mainComponentList */]),
             imports: [
-                __WEBPACK_IMPORTED_MODULE_5_element_angular__["a" /* ElModule */].forRoot(),
+                __WEBPACK_IMPORTED_MODULE_5_element_angular__["b" /* ElModule */].forRoot(),
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
                 __WEBPACK_IMPORTED_MODULE_6__angular_platform_browser_animations__["a" /* NoopAnimationsModule */],
                 __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */],
@@ -1445,6 +1697,10 @@ var MainModule = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__component_client_list_client_list_component__ = __webpack_require__("../../../../../src/app/main/component/client-list/client-list.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__component_log_list_log_list_component__ = __webpack_require__("../../../../../src/app/main/component/log-list/log-list.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__common_service_RouterInterceptorService__ = __webpack_require__("../../../../../src/app/common/service/RouterInterceptorService.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__component_client_add_client_add_component__ = __webpack_require__("../../../../../src/app/main/component/client-add/client-add.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__component_user_detail_user_detail_component__ = __webpack_require__("../../../../../src/app/main/component/user-detail/user-detail.component.ts");
+
+
 
 
 
@@ -1463,7 +1719,10 @@ var mainRoutes = [
             {
                 path: 'user',
                 loadChildren: 'app/user/user.module#UserModule',
-                data: { name: '系统用户管理', menu: true }
+                data: {
+                    name: '系统用户管理', menu: true,
+                    type: [0]
+                }
             },
             {
                 path: 'client',
@@ -1471,14 +1730,21 @@ var mainRoutes = [
                 data: { name: '客户管理', menu: true }
             },
             {
-                path: 'log',
-                component: __WEBPACK_IMPORTED_MODULE_4__component_log_list_log_list_component__["a" /* LogListComponent */],
-                data: { name: '日志管理', menu: true }
+                path: 'client/add',
+                component: __WEBPACK_IMPORTED_MODULE_6__component_client_add_client_add_component__["a" /* ClientAddComponent */],
+                data: { name: '客户添加' }
             },
             {
-                path: 'log/33',
+                path: 'user/detail',
+                component: __WEBPACK_IMPORTED_MODULE_7__component_user_detail_user_detail_component__["a" /* UserDetailComponent */],
+                data: { name: '用户详情' }
+            },
+            {
+                path: 'log',
                 component: __WEBPACK_IMPORTED_MODULE_4__component_log_list_log_list_component__["a" /* LogListComponent */],
-                data: { name: '日志管理1' }
+                data: { name: '日志管理', menu: true,
+                    type: [0]
+                }
             }
         ],
         canActivate: [__WEBPACK_IMPORTED_MODULE_5__common_service_RouterInterceptorService__["a" /* RouterInterceptorService */]]
@@ -1489,7 +1755,7 @@ var mainRoutes = [
         canActivate: [__WEBPACK_IMPORTED_MODULE_5__common_service_RouterInterceptorService__["a" /* RouterInterceptorService */]]
     }
 ];
-var mainComponentList = [__WEBPACK_IMPORTED_MODULE_4__component_log_list_log_list_component__["a" /* LogListComponent */], __WEBPACK_IMPORTED_MODULE_3__component_client_list_client_list_component__["a" /* ClientListComponent */], __WEBPACK_IMPORTED_MODULE_0__component_login_login_component__["a" /* LoginComponent */], __WEBPACK_IMPORTED_MODULE_1__component_not_found_not_found_component__["a" /* NotFoundComponent */], __WEBPACK_IMPORTED_MODULE_2__component_menu_menu_component__["a" /* MenuComponent */]];
+var mainComponentList = [__WEBPACK_IMPORTED_MODULE_7__component_user_detail_user_detail_component__["a" /* UserDetailComponent */], __WEBPACK_IMPORTED_MODULE_6__component_client_add_client_add_component__["a" /* ClientAddComponent */], __WEBPACK_IMPORTED_MODULE_4__component_log_list_log_list_component__["a" /* LogListComponent */], __WEBPACK_IMPORTED_MODULE_3__component_client_list_client_list_component__["a" /* ClientListComponent */], __WEBPACK_IMPORTED_MODULE_0__component_login_login_component__["a" /* LoginComponent */], __WEBPACK_IMPORTED_MODULE_1__component_not_found_not_found_component__["a" /* NotFoundComponent */], __WEBPACK_IMPORTED_MODULE_2__component_menu_menu_component__["a" /* MenuComponent */]];
 
 
 /***/ }),
@@ -1497,7 +1763,7 @@ var mainComponentList = [__WEBPACK_IMPORTED_MODULE_4__component_log_list_log_lis
 /***/ "../../../../../src/app/user/component/user-add/add.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"addUser viewBox\">\n  <div class=\"zwSearch\">\n    <div class=\"right\">\n    </div>\n  </div>\n  <div class=\"viewMain\">\n    <div class=\"addFrom\">\n      <label>\n        <span>名&nbsp;&nbsp;&nbsp;称：</span>\n        <el-input [(ngModel)]=\"user.user_name\" placeholder=\"请输入用户名\"></el-input>\n      </label>\n      <label>\n        <span>密&nbsp;&nbsp;&nbsp;码：</span>\n        <el-input [(ngModel)]=\"user.login_pwd\" placeholder=\"请输入密码\" native-type=\"password\"></el-input>\n      </label>\n      <label>\n        <span>登录名：</span>\n        <el-input [(ngModel)]=\"user.login_name\" placeholder=\"请输入登录名\"></el-input>\n      </label>\n      <label>\n        <span>类&nbsp;&nbsp;&nbsp;型：</span>\n        <el-select [(model)]=\"user.user_type\" placeholder=\"请选择\">\n          <el-option *ngFor=\"let item of userTypeList\"\n                     [label]=\"item.name\"\n                     [value]=\"item.value\">\n          </el-option>\n        </el-select>\n      </label>\n      <br>\n      <el-button (click)=\"save()\" [plain]=\"true\" type=\"success\">保存</el-button>\n    </div>\n  </div>\n</div>\n\n\n\n"
+module.exports = "<div class=\"addUser viewBox\">\n  <div class=\"zwSearch\">\n    <div class=\"left\">\n      <span>{{title}}</span>\n    </div>\n    <div class=\"right\">\n    </div>\n  </div>\n  <div class=\"viewMain\">\n    <div class=\"addFrom\">\n      <label>\n        <span>名&nbsp;&nbsp;&nbsp;称：</span>\n        <el-input [(ngModel)]=\"user.user_name\" placeholder=\"请输入用户名\"></el-input>\n      </label>\n      <label>\n        <span>密&nbsp;&nbsp;&nbsp;码：</span>\n        <el-input [(ngModel)]=\"user.login_pwd\" placeholder=\"请输入密码\" native-type=\"password\"></el-input>\n      </label>\n      <label>\n        <span>登录名：</span>\n        <el-input [(ngModel)]=\"user.login_name\" placeholder=\"请输入登录名\"></el-input>\n      </label>\n      <!--<label>\n        <span>类&nbsp;&nbsp;&nbsp;型：</span>\n        <el-select [(model)]=\"user.user_type\" placeholder=\"请选择\">\n          <el-option *ngFor=\"let item of userTypeList\"\n                     [label]=\"item.name\"\n                     [value]=\"item.value\">\n          </el-option>\n        </el-select>\n      </label>-->\n      <br>\n      <el-button (click)=\"save()\" [plain]=\"true\" type=\"success\">保存</el-button>\n    </div>\n  </div>\n</div>\n\n\n\n"
 
 /***/ }),
 
@@ -1527,6 +1793,8 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__common_restService_UserService__ = __webpack_require__("../../../../../src/app/common/restService/UserService.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ts_md5_dist_md5__ = __webpack_require__("../../../../ts-md5/dist/md5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ts_md5_dist_md5___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_ts_md5_dist_md5__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1536,6 +1804,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -1565,6 +1834,7 @@ var AddComponent = (function () {
                 value: 2
             }
         ];
+        this.title = '';
     }
     AddComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -1572,6 +1842,20 @@ var AddComponent = (function () {
             _this.user.id = params['id'];
             if (_this.user.id) {
                 _this.getById();
+            }
+        });
+        this.activatedRoute.params.subscribe(function (params) {
+            _this.user.user_type = params.type;
+            switch (_this.user.user_type) {
+                case '0':
+                    _this.title = '添加管理员用户';
+                    break;
+                case '1':
+                    _this.title = '添加审核员用户';
+                    break;
+                case '2':
+                    _this.title = '添加普通用户';
+                    break;
             }
         });
     };
@@ -1588,17 +1872,16 @@ var AddComponent = (function () {
         });
     };
     AddComponent.prototype.save = function () {
-        var _this = this;
         this.userService.add({
             login_name: this.user.login_name,
-            login_pwd: this.user.login_pwd,
+            login_pwd: __WEBPACK_IMPORTED_MODULE_3_ts_md5_dist_md5__["Md5"].hashStr(this.user.login_pwd),
             user_name: this.user.user_name,
             user_type: this.user.user_type
         })
             .then(function (response) {
             var rep = response;
-            if (rep.code === 200) {
-                _this.router.navigate(['/admin/user/list']);
+            if (rep.code == 0) {
+                window.history.back();
             }
             else {
                 console.log(response);
@@ -1693,7 +1976,9 @@ var ListComponent = (function () {
         this.getList();
     };
     ListComponent.prototype.add = function (item) {
-        this.router.navigate(['/admin/user/add'], { queryParams: { id: item ? item.id : '' } });
+        this.router.navigate(['/admin/user/add', this.userType], {
+            queryParams: { id: item ? item.id : '' }
+        });
     };
     ListComponent.prototype.getList = function () {
         var _this = this;
@@ -1800,7 +2085,7 @@ var routes = [
                 }
             },
             {
-                path: 'add',
+                path: 'add/:type',
                 component: __WEBPACK_IMPORTED_MODULE_3__component_user_add_add_component__["a" /* AddComponent */],
                 data: {
                     name: '添加用户'

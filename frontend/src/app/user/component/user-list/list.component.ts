@@ -12,6 +12,7 @@ export class ListComponent implements OnInit {
   total = 0;
   pageNum = 1;
   userType = 2;
+  pageSize = 10;
   loading = false;
 
   constructor(private userService: UserService,
@@ -43,14 +44,14 @@ export class ListComponent implements OnInit {
     this.loading = true;
     (this.userService as any).list({
       pageNum: this.pageNum,
-      pageSize: 10,
+      pageSize: this.pageSize,
       search: this.userType
     }, {})
       .then(response => {
         this.loading = false;
         const rep = (response as any);
         if (rep.code == 0) {
-          this.total = response.pageCount;
+          this.total = response.total_number;
           this.list = response.data;
         } else {
           console.log(response);

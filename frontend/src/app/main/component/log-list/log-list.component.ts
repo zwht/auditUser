@@ -11,6 +11,7 @@ export class LogListComponent implements OnInit {
   list = [];
   total = 0;
   pageNum = 1;
+  pageSize = 10;
   loading = false;
 
   constructor(private logService: LogService,
@@ -29,14 +30,14 @@ export class LogListComponent implements OnInit {
     this.loading = true;
     (this.logService as any).list({
       pageNum: this.pageNum,
-      pageSize: 10,
+      pageSize: this.pageSize,
       search: ''
     }, {})
       .then(response => {
         this.loading = false;
         const rep = (response as any);
         if (rep.code == 0) {
-          this.total = response.pageCount;
+          this.total = response.total_number;
           this.list = response.data;
 
         } else {

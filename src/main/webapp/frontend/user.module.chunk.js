@@ -30,7 +30,7 @@ var UserModule = (function () {
     UserModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
             imports: [
-                __WEBPACK_IMPORTED_MODULE_4_element_angular__["a" /* ElModule */].forRoot(),
+                __WEBPACK_IMPORTED_MODULE_4_element_angular__["b" /* ElModule */].forRoot(),
                 __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
                 __WEBPACK_IMPORTED_MODULE_3__user_routes__["c" /* UserRoutes */],

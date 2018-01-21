@@ -14,7 +14,8 @@ export class AddComponent implements OnInit {
     login_name: null,
     login_pwd: null,
     user_name: null,
-    user_type: null
+    user_type: null,
+    user_status: 1
   };
   userTypeList = [
     {
@@ -28,6 +29,16 @@ export class AddComponent implements OnInit {
     {
       name: '普通人员',
       value: 2
+    }
+  ];
+  statusList = [
+    {
+      name: '启用',
+      value: 1
+    },
+    {
+      name: '禁用',
+      value: 0
     }
   ];
   title = '';
@@ -46,15 +57,17 @@ export class AddComponent implements OnInit {
     });
     this.activatedRoute.params.subscribe((params) => {
       this.user.user_type = params.type;
-      switch (this.user.user_type){
+      let bj = '添加';
+      if (this.user.id) bj = '编辑';
+      switch (this.user.user_type) {
         case '0':
-          this.title='添加管理员用户';
+          this.title = bj + '管理员用户';
           break;
         case '1':
-          this.title='添加审核员用户';
+          this.title = bj + '审核员用户';
           break;
         case '2':
-          this.title='添加普通用户';
+          this.title = bj + '普通用户';
           break;
       }
     });
@@ -73,21 +86,24 @@ export class AddComponent implements OnInit {
 
 
   save() {
-    (this.userService as any).add({
-      login_name: this.user.login_name,
-      login_pwd: Md5.hashStr(this.user.login_pwd),
-      user_name: this.user.user_name,
-      user_type: this.user.user_type
-    })
-      .then(response => {
-        const rep = (response as any);
-        if (rep.code == 0) {
-          window.history.back()
-        } else {
-          console.log(response);
-        }
-      });
+    if (this.user.id) {
+
+    } else {
+      (this.userService as any).add({
+        login_name: this.user.login_name,
+        login_pwd: Md5.hashStr(this.user.login_pwd),
+        user_name: this.user.user_name,
+        user_type: this.user.user_type,
+        user_status: 1
+      })
+        .then(response => {
+          const rep = (response as any);
+          if (rep.code == 0) {
+            window.history.back()
+          } else {
+            console.log(response);
+          }
+        });
+    }
   }
-
-
 }

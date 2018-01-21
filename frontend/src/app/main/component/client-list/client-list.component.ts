@@ -11,6 +11,7 @@ export class ClientListComponent implements OnInit {
   list = [];
   total = 0;
   pageNum = 1;
+  pageSize = 10;
   loading = false;
   userType = localStorage.getItem('userType');
   constructor(private clientService: ClientService,
@@ -29,14 +30,14 @@ export class ClientListComponent implements OnInit {
     this.loading = true;
     (this.clientService as any).list({
       pageNum: this.pageNum,
-      pageSize: 10,
+      pageSize: this.pageSize,
       search: ''
     }, {})
       .then(response => {
         this.loading = false;
         const rep = (response as any);
         if (rep.code == 0) {
-          this.total = response.pageCount;
+          this.total = response.total_number;
           this.list = response.data;
 
         } else {

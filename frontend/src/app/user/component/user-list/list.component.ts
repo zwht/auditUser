@@ -10,6 +10,7 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 export class ListComponent implements OnInit {
   list = [];
   total = 0;
+  search = '';
   pageNum = 1;
   userType = 2;
   pageSize = 20;
@@ -48,7 +49,7 @@ export class ListComponent implements OnInit {
       pageNum: this.pageNum,
       pageSize: this.pageSize,
       userType: this.userType,
-      search: ''
+      search: this.search
     }, {})
       .then(response => {
         this.loading = false;

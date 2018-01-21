@@ -512,13 +512,13 @@ var UserService = (function () {
         return this.http.get(this.url +
             'find_user?page_number=' + obj.pageNum +
             '&page_size=' + obj.pageSize +
-            '&search_info=' + obj.search)
+            '&search_info=' + obj.search + '&user_type=' + obj.userType)
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(__WEBPACK_IMPORTED_MODULE_2__common_service_HandleError__["a" /* default */]);
     };
     UserService.prototype.getById = function (id) {
-        return this.http.get(this.url + 'getById?id=' + id)
+        return this.http.get(this.url + 'get_user_info_by_id?id=' + id)
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(__WEBPACK_IMPORTED_MODULE_2__common_service_HandleError__["a" /* default */]);
@@ -533,6 +533,12 @@ var UserService = (function () {
     // 添加用户
     UserService.prototype.change_pwd = function (user) {
         return this.http.post(this.url + 'change_pwd', $.param(user))
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(__WEBPACK_IMPORTED_MODULE_2__common_service_HandleError__["a" /* default */]);
+    };
+    UserService.prototype.edit_user_info = function (user) {
+        return this.http.post(this.url + 'edit_user_info', $.param(user))
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(__WEBPACK_IMPORTED_MODULE_2__common_service_HandleError__["a" /* default */]);
@@ -960,7 +966,7 @@ var ClientAddComponent = (function () {
 /***/ "../../../../../src/app/main/component/client-list/client-list.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"clientList viewBox\">\n  <div class=\"zwSearch\">\n    <div class=\"right\">\n      <el-button *ngIf=\"userType!=2\" (click)=\"add()\" size=\"mini\" type=\"primary\">添加</el-button>\n    </div>\n  </div>\n  <div class=\"viewMain\"  [el-loading]=\"loading\" [text]=\"'拼命加载中'\">\n    <div class=\"noData\" *ngIf=\"!list.length\">\n      <span>没有数据...</span>\n    </div>\n    <table class=\"zwTable\">\n      <tr>\n        <th>车主姓名</th>\n        <th>用户住址</th>\n        <th>身份证</th>\n        <th>车主电话</th>\n        <th>品牌</th>\n        <th>车辆类型</th>\n        <th>颜色</th>\n        <th>车牌号</th>\n        <th>审核</th>\n        <th>审核时间</th>\n        <th>审核人</th>\n        <th *ngIf=\"userType!=2\">操作</th>\n      </tr>\n      <tr *ngFor=\"let item of list let i=index\">\n        <td>{{item.contact}}</td>\n        <td>{{item.address}}</td>\n        <td>{{item.idcard}}</td>\n        <td>{{item.contacttel}}</td>\n        <td>{{item.brand}}</td>\n        <td>{{item.cartype}}</td>\n        <td>{{item.color}}</td>\n        <td>{{item.licenseplate}}</td>\n        <td class=\"el-tag-box\">\n          <el-tag *ngIf=\"item.op_flag==1\" type=\"success\">已审核</el-tag>\n          <el-tag *ngIf=\"item.op_flag!=1\" type=\"warning\">未审核</el-tag>\n        </td>\n        <td>{{item.op_time}}</td>\n        <td>{{item.op_name}}</td>\n        <td style=\"width: 200px;\" *ngIf=\"userType!=2\">\n          <el-button (click)=\"add(item)\" size=\"mini\" type=\"success\" icon=\"edit\" [plain]=\"true\">编辑</el-button>\n          <el-button *ngIf=\"item.op_flag!=1\" (click)=\"verify(item.id)\" size=\"mini\"  type=\"primary\" icon=\"circle-check\"\n                     [plain]=\"true\">审核通过</el-button>\n        </td>\n      </tr>\n    </table>\n    <div class=\"pageBox\">\n      <el-pagination *ngIf=\"total\" [total]=\"total\"\n                     [page-size]=\"20\"\n                     [(model)]=\"pageNum\"\n                     (modelChange)=\"getList()\"\n                     [layout]=\"['prev', 'pager', 'next', 'jumper', 'total']\">\n      </el-pagination>\n    </div>\n\n  </div>\n</div>\n\n\n"
+module.exports = "<div class=\"clientList viewBox\">\n  <div class=\"zwSearch\">\n    <div class=\"right\">\n      <!--<el-button *ngIf=\"userType!=2\" (click)=\"add()\" size=\"mini\" type=\"primary\">添加</el-button>--></div>\n  </div>\n  <div class=\"viewMain\"  [el-loading]=\"loading\" [text]=\"'拼命加载中'\">\n    <div class=\"noData\" *ngIf=\"!list.length\">\n      <span>没有数据...</span>\n    </div>\n    <table class=\"zwTable\">\n      <tr>\n        <th>车主姓名</th>\n        <th>用户住址</th>\n        <th>身份证</th>\n        <th>车主电话</th>\n        <th>品牌</th>\n        <th>车辆类型</th>\n        <th>颜色</th>\n        <th>车牌号</th>\n        <th>审核</th>\n        <th>审核时间</th>\n        <th>审核人</th>\n        <th *ngIf=\"userType!=2\">操作</th>\n      </tr>\n      <tr *ngFor=\"let item of list let i=index\">\n        <td>{{item.contact}}</td>\n        <td>{{item.address}}</td>\n        <td>{{item.idcard}}</td>\n        <td>{{item.contacttel}}</td>\n        <td>{{item.brand}}</td>\n        <td>{{item.cartype}}</td>\n        <td>{{item.color}}</td>\n        <td>{{item.licenseplate}}</td>\n        <td class=\"el-tag-box\">\n          <el-tag *ngIf=\"item.op_flag==1\" type=\"success\">已审核</el-tag>\n          <el-tag *ngIf=\"item.op_flag!=1\" type=\"warning\">未审核</el-tag>\n        </td>\n        <td>{{item.op_time}}</td>\n        <td>{{item.op_name}}</td>\n        <td style=\"width: 120px; text-align: center;\" *ngIf=\"userType!=2\">\n          <el-button *ngIf=\"item.op_flag!=1\" (click)=\"verify(item.id)\" size=\"mini\"  type=\"primary\" icon=\"circle-check\"\n                     [plain]=\"true\">审核通过</el-button>\n        </td>\n      </tr>\n    </table>\n    <div class=\"pageBox\">\n      <el-pagination *ngIf=\"total\" [total]=\"total\"\n                     [page-size]=\"pageSize\"\n                     [(model)]=\"pageNum\"\n                     (modelChange)=\"getList()\"\n                     [layout]=\"['prev', 'pager', 'next', 'jumper', 'total']\">\n      </el-pagination>\n    </div>\n\n  </div>\n</div>\n\n\n"
 
 /***/ }),
 
@@ -1009,6 +1015,7 @@ var ClientListComponent = (function () {
         this.list = [];
         this.total = 0;
         this.pageNum = 1;
+        this.pageSize = 20;
         this.loading = false;
         this.userType = localStorage.getItem('userType');
     }
@@ -1023,14 +1030,14 @@ var ClientListComponent = (function () {
         this.loading = true;
         this.clientService.list({
             pageNum: this.pageNum,
-            pageSize: 10,
+            pageSize: this.pageSize,
             search: ''
         }, {})
             .then(function (response) {
             _this.loading = false;
             var rep = response;
             if (rep.code == 0) {
-                _this.total = response.pageCount;
+                _this.total = response.total_number;
                 _this.list = response.data;
             }
             else {
@@ -1074,7 +1081,7 @@ var ClientListComponent = (function () {
 /***/ "../../../../../src/app/main/component/log-list/log-list.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"clientList viewBox\">\n  <div class=\"zwSearch\">\n    <div class=\"right\">\n    </div>\n  </div>\n  <div class=\"viewMain\" [el-loading]=\"loading\" [text]=\"'拼命加载中'\">\n    <div class=\"noData\" *ngIf=\"!list.length\">\n      <span>没有数据...</span>\n    </div>\n    <table class=\"zwTable\">\n      <tr>\n        <th>操作内容</th>\n        <th>操作人</th>\n        <th>操作人Ip</th>\n        <th>时间</th>\n      </tr>\n      <tr *ngFor=\"let item of list let i=index\">\n        <td>{{item.op_content}}</td>\n        <td>{{item.op_user}}</td>\n        <td>{{item.ip_address}}</td>\n        <td>{{item.op_time}}</td>\n      </tr>\n    </table>\n    <div class=\"pageBox\">\n      <el-pagination *ngIf=\"total\" [total]=\"total\"\n                     [page-size]=\"20\"\n                     [(model)]=\"pageNum\"\n                     (modelChange)=\"getList()\"\n                     [layout]=\"['prev', 'pager', 'next', 'jumper', 'total']\">\n      </el-pagination>\n    </div>\n\n  </div>\n</div>\n\n\n"
+module.exports = "<div class=\"clientList viewBox\">\n  <div class=\"zwSearch\">\n    <div class=\"right\">\n    </div>\n  </div>\n  <div class=\"viewMain\" [el-loading]=\"loading\" [text]=\"'拼命加载中'\">\n    <div class=\"noData\" *ngIf=\"!list.length\">\n      <span>没有数据...</span>\n    </div>\n    <table class=\"zwTable\">\n      <tr>\n        <th>操作内容</th>\n        <th>操作人</th>\n        <th>操作人Ip</th>\n        <th>时间</th>\n      </tr>\n      <tr *ngFor=\"let item of list let i=index\">\n        <td>{{item.op_content}}</td>\n        <td>{{item.op_user}}</td>\n        <td>{{item.ip_address}}</td>\n        <td>{{item.op_time}}</td>\n      </tr>\n    </table>\n    <div class=\"pageBox\">\n      <el-pagination *ngIf=\"total\" [total]=\"total\"\n                     [page-size]=\"pageSize\"\n                     [(model)]=\"pageNum\"\n                     (modelChange)=\"getList()\"\n                     [layout]=\"['prev', 'pager', 'next', 'jumper', 'total']\">\n      </el-pagination>\n    </div>\n\n  </div>\n</div>\n\n\n"
 
 /***/ }),
 
@@ -1123,6 +1130,7 @@ var LogListComponent = (function () {
         this.list = [];
         this.total = 0;
         this.pageNum = 1;
+        this.pageSize = 20;
         this.loading = false;
     }
     LogListComponent.prototype.ngOnInit = function () {
@@ -1136,14 +1144,14 @@ var LogListComponent = (function () {
         this.loading = true;
         this.logService.list({
             pageNum: this.pageNum,
-            pageSize: 10,
+            pageSize: this.pageSize,
             search: ''
         }, {})
             .then(function (response) {
             _this.loading = false;
             var rep = response;
             if (rep.code == 0) {
-                _this.total = response.pageCount;
+                _this.total = response.total_number;
                 _this.list = response.data;
             }
             else {
@@ -1222,6 +1230,7 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__common_restService_AuthService__ = __webpack_require__("../../../../../src/app/common/restService/AuthService.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ts_md5_dist_md5__ = __webpack_require__("../../../../ts-md5/dist/md5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ts_md5_dist_md5___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_ts_md5_dist_md5__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_element_angular__ = __webpack_require__("../../../../element-angular/release/element-angular.module.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1237,10 +1246,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var LoginComponent = (function () {
-    function LoginComponent(http, router, authService) {
+    function LoginComponent(http, router, message, authService) {
         this.http = http;
         this.router = router;
+        this.message = message;
         this.authService = authService;
         this.login = new __WEBPACK_IMPORTED_MODULE_3__common_class_LoginVo__["a" /* LoginVo */]('', '');
     }
@@ -1272,6 +1283,9 @@ var LoginComponent = (function () {
                         break;
                 }
             }
+            else if (rep.code == 10001) {
+                _this.message.error('账号密码不正确，或者账号已被停用');
+            }
             else {
                 console.log(data);
             }
@@ -1286,6 +1300,7 @@ var LoginComponent = (function () {
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* Http */],
             __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */],
+            __WEBPACK_IMPORTED_MODULE_6_element_angular__["a" /* ElMessageService */],
             __WEBPACK_IMPORTED_MODULE_4__common_restService_AuthService__["a" /* AuthService */]])
     ], LoginComponent);
     return LoginComponent;
@@ -1763,7 +1778,7 @@ var mainComponentList = [__WEBPACK_IMPORTED_MODULE_7__component_user_detail_user
 /***/ "../../../../../src/app/user/component/user-add/add.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"addUser viewBox\">\n  <div class=\"zwSearch\">\n    <div class=\"left\">\n      <span>{{title}}</span>\n    </div>\n    <div class=\"right\">\n    </div>\n  </div>\n  <div class=\"viewMain\">\n    <div class=\"addFrom\">\n      <label>\n        <span>名&nbsp;&nbsp;&nbsp;称：</span>\n        <el-input [(ngModel)]=\"user.user_name\" placeholder=\"请输入用户名\"></el-input>\n      </label>\n      <label>\n        <span>密&nbsp;&nbsp;&nbsp;码：</span>\n        <el-input [(ngModel)]=\"user.login_pwd\" placeholder=\"请输入密码\" native-type=\"password\"></el-input>\n      </label>\n      <label>\n        <span>登录名：</span>\n        <el-input [(ngModel)]=\"user.login_name\" placeholder=\"请输入登录名\"></el-input>\n      </label>\n      <!--<label>\n        <span>类&nbsp;&nbsp;&nbsp;型：</span>\n        <el-select [(model)]=\"user.user_type\" placeholder=\"请选择\">\n          <el-option *ngFor=\"let item of userTypeList\"\n                     [label]=\"item.name\"\n                     [value]=\"item.value\">\n          </el-option>\n        </el-select>\n      </label>-->\n      <br>\n      <el-button (click)=\"save()\" [plain]=\"true\" type=\"success\">保存</el-button>\n    </div>\n  </div>\n</div>\n\n\n\n"
+module.exports = "<div class=\"addUser viewBox\">\n  <div class=\"zwSearch\">\n    <div class=\"left\">\n      <span>{{title}}</span>\n    </div>\n    <div class=\"right\">\n    </div>\n  </div>\n  <div class=\"viewMain\">\n    <div class=\"addFrom\">\n\n      <label>\n        <span>登录名：</span>\n        <el-input [elDisabled]=\"!!user.id\" [(ngModel)]=\"user.login_name\" placeholder=\"请输入登录名\"></el-input>\n      </label>\n      <label *ngIf=\"!user.id\">\n        <span>密&nbsp;&nbsp;&nbsp;码：</span>\n        <el-input [(ngModel)]=\"user.login_pwd\" placeholder=\"请输入密码\" native-type=\"password\"></el-input>\n      </label>\n      <label>\n        <span>姓&nbsp;&nbsp;&nbsp;名：</span>\n        <el-input [(ngModel)]=\"user.user_name\" placeholder=\"请输入用户名\"></el-input>\n      </label>\n      <label *ngIf=\"user.id\">\n        <span>状&nbsp;&nbsp;&nbsp;态：</span>\n        <el-select [(model)]=\"user.user_status\" placeholder=\"请选择\">\n          <el-option *ngFor=\"let item of statusList\"\n                     [label]=\"item.name\"\n                     [value]=\"item.value\">\n          </el-option>\n        </el-select>\n      </label>\n      <br>\n      <el-button (click)=\"save()\" [plain]=\"true\" type=\"success\">保存</el-button>\n    </div>\n  </div>\n</div>\n\n\n\n"
 
 /***/ }),
 
@@ -1795,6 +1810,7 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ts_md5_dist_md5__ = __webpack_require__("../../../../ts-md5/dist/md5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ts_md5_dist_md5___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_ts_md5_dist_md5__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_element_angular__ = __webpack_require__("../../../../element-angular/release/element-angular.module.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1808,17 +1824,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var AddComponent = (function () {
-    function AddComponent(userService, router, activatedRoute) {
+    function AddComponent(userService, router, message, activatedRoute) {
         this.userService = userService;
         this.router = router;
+        this.message = message;
         this.activatedRoute = activatedRoute;
         this.user = {
             id: null,
             login_name: null,
             login_pwd: null,
             user_name: null,
-            user_type: null
+            user_type: null,
+            user_status: 1
         };
         this.userTypeList = [
             {
@@ -1834,6 +1853,16 @@ var AddComponent = (function () {
                 value: 2
             }
         ];
+        this.statusList = [
+            {
+                name: '启用',
+                value: 1
+            },
+            {
+                name: '禁用',
+                value: 0
+            }
+        ];
         this.title = '';
     }
     AddComponent.prototype.ngOnInit = function () {
@@ -1846,15 +1875,18 @@ var AddComponent = (function () {
         });
         this.activatedRoute.params.subscribe(function (params) {
             _this.user.user_type = params.type;
+            var bj = '添加';
+            if (_this.user.id)
+                bj = '编辑';
             switch (_this.user.user_type) {
                 case '0':
-                    _this.title = '添加管理员用户';
+                    _this.title = bj + '管理员用户';
                     break;
                 case '1':
-                    _this.title = '添加审核员用户';
+                    _this.title = bj + '审核员用户';
                     break;
                 case '2':
-                    _this.title = '添加普通用户';
+                    _this.title = bj + '普通用户';
                     break;
             }
         });
@@ -1864,29 +1896,53 @@ var AddComponent = (function () {
         this.userService.getById(this.user.id)
             .then(function (response) {
             var rep = response;
-            if (rep.code === 200) {
-                _this.user = rep.data;
+            if (rep.code == 0) {
+                _this.user = rep;
             }
             else {
             }
         });
     };
     AddComponent.prototype.save = function () {
-        this.userService.add({
-            login_name: this.user.login_name,
-            login_pwd: __WEBPACK_IMPORTED_MODULE_3_ts_md5_dist_md5__["Md5"].hashStr(this.user.login_pwd),
-            user_name: this.user.user_name,
-            user_type: this.user.user_type
-        })
-            .then(function (response) {
-            var rep = response;
-            if (rep.code == 0) {
-                window.history.back();
-            }
-            else {
-                console.log(response);
-            }
-        });
+        var _this = this;
+        if (this.user.id) {
+            this.userService.edit_user_info({
+                id: this.user.id,
+                user_name: this.user.user_name,
+                user_type: this.user.user_type,
+                user_status: this.user.user_status
+            })
+                .then(function (response) {
+                var rep = response;
+                if (rep.code == 0) {
+                    window.history.back();
+                }
+                else {
+                    console.log(response);
+                }
+            });
+        }
+        else {
+            this.userService.add({
+                login_name: this.user.login_name,
+                login_pwd: __WEBPACK_IMPORTED_MODULE_3_ts_md5_dist_md5__["Md5"].hashStr(this.user.login_pwd),
+                user_name: this.user.user_name,
+                user_type: this.user.user_type,
+                user_status: 1
+            })
+                .then(function (response) {
+                var rep = response;
+                if (rep.code == 0) {
+                    window.history.back();
+                }
+                else if (rep.code == 10006) {
+                    _this.message.error('添加失败，登录名重复');
+                }
+                else {
+                    console.log(response);
+                }
+            });
+        }
     };
     AddComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -1897,6 +1953,7 @@ var AddComponent = (function () {
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__common_restService_UserService__["a" /* UserService */],
             __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */],
+            __WEBPACK_IMPORTED_MODULE_4_element_angular__["a" /* ElMessageService */],
             __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]])
     ], AddComponent);
     return AddComponent;
@@ -1927,7 +1984,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/user/component/user-list/list.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"userList viewBox\">\n  <div class=\"zwSearch\">\n    <div class=\"right\">\n      <el-button (click)=\"add()\" size=\"mini\" type=\"primary\">添加</el-button>\n    </div>\n  </div>\n  <div class=\"viewMain\" [el-loading]=\"loading\" [text]=\"'拼命加载中'\">\n    <div class=\"noData\" *ngIf=\"!list.length\">\n      <span>没有数据...</span>\n    </div>\n    <table class=\"zwTable\">\n      <tr>\n        <th>登录名</th>\n        <th>用户名</th>\n        <th>状态</th>\n        <th>操作</th>\n      </tr>\n      <tr *ngFor=\"let item of list let i=index\">\n        <td>{{item.login_name}}</td>\n        <td>{{item.user_name}}</td>\n        <td  class=\"el-tag-box\">\n          <el-tag *ngIf=\"item.user_status==1\" type=\"success\">启用</el-tag>\n          <el-tag *ngIf=\"item.user_status!=1\" type=\"warning\">禁用</el-tag>\n        </td>\n\n        <td style=\"width: 180px; text-align: center;\">\n          <el-button *ngIf=\"item.user_status==1\" (click)=\"del(item.id,0)\" size=\"mini\" type=\"warning\"\n                     icon=\"circle-close\" [plain]=\"true\">禁用\n          </el-button>\n          <el-button *ngIf=\"item.user_status!=1\" (click)=\"del(item.id,1)\" size=\"mini\" type=\"primary\" icon=\"circle-check\"\n                     [plain]=\"true\">启用\n          </el-button>\n          <el-button (click)=\"add(item)\" size=\"mini\" type=\"success\" icon=\"edit\" [plain]=\"true\">编辑</el-button>\n        </td>\n      </tr>\n    </table>\n    <div class=\"pageBox\">\n      <el-pagination *ngIf=\"total\" [total]=\"total\"\n                     [page-size]=\"20\"\n                     [(model)]=\"pageNum\"\n                     (modelChange)=\"getList()\"\n                     [layout]=\"['prev', 'pager', 'next', 'jumper', 'total']\">\n      </el-pagination>\n    </div>\n\n  </div>\n</div>\n\n\n"
+module.exports = "<div class=\"userList viewBox\">\n  <div class=\"zwSearch\">\n    <div class=\"right\">\n      <el-button (click)=\"add()\" size=\"mini\" type=\"primary\">添加</el-button>\n    </div>\n  </div>\n  <div class=\"viewMain\" [el-loading]=\"loading\" [text]=\"'拼命加载中'\">\n    <div class=\"noData\" *ngIf=\"!list.length\">\n      <span>没有数据...</span>\n    </div>\n    <table class=\"zwTable\">\n      <tr>\n        <th>登录名</th>\n        <th>用户名</th>\n        <th>状态</th>\n        <th>操作</th>\n      </tr>\n      <tr *ngFor=\"let item of list let i=index\">\n        <td>{{item.login_name}}</td>\n        <td>{{item.user_name}}</td>\n        <td  class=\"el-tag-box\">\n          <el-tag *ngIf=\"item.user_status==1\" type=\"success\">启用</el-tag>\n          <el-tag *ngIf=\"item.user_status!=1\" type=\"warning\">禁用</el-tag>\n        </td>\n\n        <td style=\"width: 180px; text-align: center;\">\n          <el-button *ngIf=\"item.user_status==1\" (click)=\"del(item,0)\" size=\"mini\" type=\"warning\"\n                     icon=\"circle-close\" [plain]=\"true\">禁用\n          </el-button>\n          <el-button *ngIf=\"item.user_status!=1\" (click)=\"del(item,1)\" size=\"mini\" type=\"primary\" icon=\"circle-check\"\n                     [plain]=\"true\">启用\n          </el-button>\n          <el-button (click)=\"add(item)\" size=\"mini\" type=\"success\" icon=\"edit\" [plain]=\"true\">编辑</el-button>\n        </td>\n      </tr>\n    </table>\n    <div class=\"pageBox\">\n      <el-pagination *ngIf=\"total\" [total]=\"total\"\n                     [page-size]=\"pageSize\"\n                     [(model)]=\"pageNum\"\n                     (modelChange)=\"getList()\"\n                     [layout]=\"['prev', 'pager', 'next', 'jumper', 'total']\">\n      </el-pagination>\n    </div>\n\n  </div>\n</div>\n\n\n"
 
 /***/ }),
 
@@ -1960,6 +2017,7 @@ var ListComponent = (function () {
         this.total = 0;
         this.pageNum = 1;
         this.userType = 2;
+        this.pageSize = 20;
         this.loading = false;
     }
     ListComponent.prototype.ngOnInit = function () {
@@ -1985,14 +2043,15 @@ var ListComponent = (function () {
         this.loading = true;
         this.userService.list({
             pageNum: this.pageNum,
-            pageSize: 10,
-            search: this.userType
+            pageSize: this.pageSize,
+            userType: this.userType,
+            search: ''
         }, {})
             .then(function (response) {
             _this.loading = false;
             var rep = response;
             if (rep.code == 0) {
-                _this.total = response.pageCount;
+                _this.total = response.total_number;
                 _this.list = response.data;
             }
             else {
@@ -2000,12 +2059,18 @@ var ListComponent = (function () {
             }
         });
     };
-    ListComponent.prototype.del = function (id) {
+    ListComponent.prototype.del = function (item, key) {
         var _this = this;
-        this.userService.del(id)
+        this.loading = true;
+        this.userService.edit_user_info({
+            user_status: key,
+            id: item.id,
+            user_name: item.user_name,
+            user_type: item.user_type
+        })
             .then(function (response) {
             var rep = response;
-            if (rep.code === 200) {
+            if (rep.code == 0) {
                 _this.getList();
             }
             else {

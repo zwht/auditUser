@@ -10,6 +10,7 @@ import {Router} from '@angular/router';
 export class ClientListComponent implements OnInit {
   list = [];
   total = 0;
+  search = '';
   pageNum = 1;
   pageSize = 20;
   loading = false;
@@ -31,7 +32,7 @@ export class ClientListComponent implements OnInit {
     (this.clientService as any).list({
       pageNum: this.pageNum,
       pageSize: this.pageSize,
-      search: ''
+      search: this.search
     }, {})
       .then(response => {
         this.loading = false;

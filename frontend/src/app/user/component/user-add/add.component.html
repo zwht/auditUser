@@ -1,38 +1,36 @@
-<div>
-  <label>
-    <span>名称：</span>
-    <input [(ngModel)]="user.name" placeholder="请输入用户名" type="text">
-  </label>
-  <label>
-    <span>密码：</span>
-    <input [(ngModel)]="user.password" placeholder="请输入密码" type="password">
-  </label>
-  <label>
-    <span>手机号：</span>
-    <input [(ngModel)]="user.phone" placeholder="请输入手机号" type="text">
-  </label>
-  <label>
-    <span>登录名：</span>
-    <input [(ngModel)]="user.loginName" placeholder="请输入登录名" type="text">
-  </label>
-  <label>
-    <span>类型：</span>
-    <el-select [model]="user.type" placeholder="请选择" (modelChange)="handle($event)">
-      <el-option *ngFor="let item of gxList"
-                 [label]="item.name"
-                 [value]="item.name">
-      </el-option>
-    </el-select>
-  </label>
-  <label>
-    <span>角色：</span>
-    <input [(ngModel)]="user.roles" placeholder="请输入角色" type="text">
-  </label>
-  <label>
-    <span>地址：</span>
-    <input [(ngModel)]="user.address" placeholder="请输入" type="text">
-  </label>
+<div class="clientList viewBox">
+  <div class="zwSearch">
+    <div class="right">
+    </div>
+  </div>
+  <div class="viewMain">
+    <div>
+      <label>
+        <span>名称：</span>
+        <el-input [(ngModel)]="user.user_name" placeholder="请输入用户名"></el-input>
+      </label>
+      <label>
+        <span>密码：</span>
+        <el-input [(ngModel)]="user.login_pwd" placeholder="请输入密码" native-type="password"></el-input>
+      </label>
+      <label>
+        <span>登录名：</span>
+        <el-input [(ngModel)]="user.login_name" placeholder="请输入登录名"></el-input>
+      </label>
+      <label>
+        <span>类型：</span>
+        <el-select [(model)]="user.user_type" placeholder="请选择">
+          <el-option *ngFor="let item of userTypeList"
+                     [label]="item.name"
+                     [value]="item.value">
+          </el-option>
+        </el-select>
+      </label>
 
-
-  <button (click)="save()" type="info" style="width: 100%; margin-top: 30px;">保存</button>
+      <button (click)="save()" type="info" style="width: 100%; margin-top: 30px;">保存</button>
+    </div>
+  </div>
 </div>
+
+
+

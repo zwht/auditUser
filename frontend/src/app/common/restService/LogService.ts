@@ -3,10 +3,10 @@
  */
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
-import HandleError from './../../common/service/HandleError';
-import {User} from './../../common/class/User';
+import HandleError from './../service/HandleError';
+
 @Injectable()
-export class UserService {
+export class LogService {
 
   constructor(private http: Http) {
   }
@@ -14,13 +14,21 @@ export class UserService {
   /**获取用户列表**/
   private url = '/api/';
 
-  public list(obj: Object, obj1: Object): Promise<void> {
-    return this.http.get(this.url +
-      'find_user?page_number=' + (obj as any).pageNum +
-      '&page_size=' + (obj as any).pageSize +
-      '&search_info=' + (obj as any).search)
+  // 添加
+  public add(gx): Promise<void> {
+    return this.http.post(this.url + 'add',
+      JSON.stringify(gx))
       .toPromise()
       .then(response => response.json())
+      .catch(HandleError);
+  }
+
+  public list(obj: Object, body: Object): Promise<void> {
+    return this.http.get(this.url + 'find_log?page_number=' + (obj as any).pageNum+
+      '&page_size=' + (obj as any).pageSize+
+      '&search_info=' + (obj as any).search)
+      .toPromise()
+      .then(response =>  response.json())
       .catch(HandleError);
   }
 
@@ -31,10 +39,9 @@ export class UserService {
       .catch(HandleError);
   }
 
-  // 添加用户
-  public add(user: User): Promise<void> {
-    return this.http.post(this.url + 'add_user',
-      JSON.stringify(user))
+  public update(gx): Promise<void> {
+    return this.http.post(this.url + 'update',
+      JSON.stringify(gx))
       .toPromise()
       .then(response => response.json())
       .catch(HandleError);

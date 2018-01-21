@@ -1,29 +1,35 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../../common/restService/UserService';
-import {GxService} from '../../../common/restService/GxService';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.css'],
-  providers: [UserService, GxService]
+  providers: [UserService]
 })
 export class AddComponent implements OnInit {
-  gxList = [];
   user = {
     id: null,
-    name: null,
-    password: null,
-    phone: null,
-    loginName: null,
-    type: '',
-    roles: null,
-    state: 1,
-    address: null
+    login_name: null,
+    login_pwd: null,
+    user_name: null,
+    user_type: null
   };
-
+  userTypeList = [
+    {
+      name: '管理员',
+      value: 0
+    },
+    {
+      name: '审核员',
+      value: 1
+    },
+    {
+      name: '普通人员',
+      value: 2
+    }
+  ];
   constructor(private userService: UserService,
-              private gxService: GxService,
               private router: Router,
               private activatedRoute: ActivatedRoute) {
   }
@@ -36,8 +42,6 @@ export class AddComponent implements OnInit {
       }
 
     });
-
-    this.getGxList();
   }
 
   getById() {
@@ -51,27 +55,14 @@ export class AddComponent implements OnInit {
       });
   }
 
-  handle(event: any): void {
-    this.user.type = event;
-  }
-
-  getGxList() {
-    (this.gxService as any).list({
-      pageNum: 1,
-      pageSize: 50
-    }, {})
-      .then(response => {
-        const rep = (response as any);
-        if (rep.code === 200) {
-          this.gxList = response.data.data;
-        } else {
-          console.log(response);
-        }
-      });
-  }
 
   save() {
-    (this.userService as any).add(this.user)
+    (this.userService as any).add({
+      login_name: this.user.login_name,
+      login_pwd: this.user.login_pwd,
+      user_name: this.user.user_name,
+      user_type: this.user.user_type
+    })
       .then(response => {
         const rep = (response as any);
         if (rep.code === 200) {

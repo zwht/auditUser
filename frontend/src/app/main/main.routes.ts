@@ -1,6 +1,9 @@
 import {LoginComponent} from './component/login/login.component';
 import {NotFoundComponent} from './component/not-found/not-found.component';
-import {MenuComponent} from './../main/component/menu/menu.component';
+import {MenuComponent} from '../main/component/menu/menu.component';
+import {ClientListComponent} from '../main/component/client-list/client-list.component';
+import {LogListComponent} from '../main/component/log-list/log-list.component';
+
 export const mainRoutes = [
   {
     path: '',
@@ -13,18 +16,23 @@ export const mainRoutes = [
       {
         path: 'user',
         loadChildren: 'app/user/user.module#UserModule',
-        data: {name: '用户管理', menu: true}
+        data: {name: '系统用户管理', menu: true}
       },
       {
-        path: 'work',
-        loadChildren: 'app/work/work.module#WorkModule',
-        data: {name: '工单管理', menu: true}
+        path: 'client',
+        component: ClientListComponent,
+        data: {name: '客户管理', menu: true}
       },
       {
-        path: 'product',
-        loadChildren: 'app/product/product.module#ProductModule',
-        data: {name: '产品管理', menu: true}
+        path: 'log',
+        component: LogListComponent,
+        data: {name: '日志管理', menu: true}
       },
+      {
+        path: 'log/33',
+        component: LogListComponent,
+        data: {name: '日志管理1'}
+      }
     ]
   },
   {
@@ -34,4 +42,4 @@ export const mainRoutes = [
 
 ];
 
-export const mainComponentList = [LoginComponent, NotFoundComponent, MenuComponent];
+export const mainComponentList = [LogListComponent, ClientListComponent, LoginComponent, NotFoundComponent, MenuComponent];

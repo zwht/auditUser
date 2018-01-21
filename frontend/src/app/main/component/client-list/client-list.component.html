@@ -1,0 +1,56 @@
+<div class="clientList viewBox">
+  <div class="zwSearch">
+    <div class="right">
+      <el-button (click)="add()" size="mini" type="primary">添加</el-button>
+    </div>
+  </div>
+  <div class="viewMain">
+    <table class="zwTable">
+      <tr>
+        <th>车主姓名</th>
+        <th>用户住址</th>
+        <th>身份证</th>
+        <th>车主电话</th>
+        <th>品牌</th>
+        <th>车辆类型</th>
+        <th>颜色</th>
+        <th>车牌号</th>
+        <th>审核</th>
+        <th>审核时间</th>
+        <th>审核人</th>
+        <th>操作</th>
+      </tr>
+      <tr *ngFor="let item of list let i=index">
+        <td>{{item.contact}}</td>
+        <td>{{item.address}}</td>
+        <td>{{item.idcard}}</td>
+        <td>{{item.contacttel}}</td>
+        <td>{{item.brand}}</td>
+        <td>{{item.cartype}}</td>
+        <td>{{item.color}}</td>
+        <td>{{item.licenseplate}}</td>
+        <td class="el-tag-box">
+          <el-tag *ngIf="item.op_flag==1" type="success">已审核</el-tag>
+          <el-tag *ngIf="item.op_flag!=1" type="warning">未审核</el-tag>
+        </td>
+        <td>{{item.op_time}}</td>
+        <td>{{item.op_name}}</td>
+        <td style="width: 180px; text-align: center;">
+          <el-button (click)="add(item)" size="mini" type="success" icon="edit">编辑</el-button>
+          <el-button (click)="verify(item.id)" size="mini" type="success" icon="edit">审核</el-button>
+        </td>
+      </tr>
+    </table>
+    <div class="pageBox">
+      <el-pagination *ngIf="total" [total]="total"
+                     [page-size]="20"
+                     [(model)]="pageNum"
+                     (modelChange)="getList()"
+                     [layout]="['prev', 'pager', 'next', 'jumper', 'total']">
+      </el-pagination>
+    </div>
+
+  </div>
+</div>
+
+

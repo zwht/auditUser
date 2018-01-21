@@ -1,8 +1,6 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
 
-import {CorporationListComponent} from './component/corporation-list/corporation-list.component';
-import {CorporationAddComponent} from './component/corporation-add/corporation-add.component';
 import {ListComponent} from './component/user-list/list.component';
 import {AddComponent} from './component/user-add/add.component';
 
@@ -10,29 +8,30 @@ export const routes: Routes = [
   {
     path: '',
     data: {
-      name: '用户管理'
+      name: '系统用户管理'
     },
     children: [
       {
-        path: 'company',
-        component: CorporationListComponent,
+        path: 'admin',
+        component: ListComponent,
         data: {
-          name: '企业列表',
+          name: '管理员',
           menu: true
         }
       },
       {
-        path: 'company/add',
-        component: CorporationAddComponent,
+        path: 'audit',
+        component: ListComponent,
         data: {
-          name: '添加企业'
+          name: '审核员',
+          menu: true
         }
       },
       {
         path: 'list',
         component: ListComponent,
         data: {
-          name: '用户列表',
+          name: '普通普通用户',
           menu: true
         }
       },
@@ -57,8 +56,6 @@ export class UserRoutes {
 }
 
 export const UserComponents = [
-  CorporationListComponent,
-  CorporationAddComponent,
   ListComponent,
   AddComponent
 ];

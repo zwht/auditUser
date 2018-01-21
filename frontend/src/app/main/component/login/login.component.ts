@@ -1,8 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Headers, Http} from '@angular/http';
 import {Router} from '@angular/router';
-import {LoginVo} from './../../class/vo/LoginVo';
-import {AuthService} from './../../service/AuthService';
+import {LoginVo} from '../../../common/class/LoginVo';
+import {AuthService} from '../../../common/restService/AuthService';
+import {Md5} from "ts-md5/dist/md5";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -23,13 +24,17 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin(data) {
-    this.authService.login(this.login)
+    this.authService.login({
+      login_name: this.login.name,
+      login_pwd: this.login.password
+    })
       .then(response => {
         const rep = (response as any);
-        if (rep.code === 200) {
+        if (rep.code == 0) {
+          debugger
           localStorage.setItem('userName', this.login.name);
           localStorage.setItem('token', rep.data.token);
-          this.router.navigateByUrl('/admin/user/company');
+          this.router.navigateByUrl('/admin/user');
         } else {
           console.log(data);
         }

@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {UserList} from '../../../user/user.routes';
-import {ProductList} from '../../../product/product.routes';
-import {WorkList} from '../../../work/work.routes';
 
 import {Router} from '@angular/router';
 @Component({
@@ -12,7 +10,7 @@ import {Router} from '@angular/router';
 export class MenuComponent implements OnInit {
   menu = [];
   userName = localStorage.getItem('userName');
-  routesMenu = [UserList[0], ProductList[0], WorkList[0]];
+  routesMenu = [UserList[0]];
   rightDown: any[] = [
     {
       value: 'my',
@@ -66,16 +64,14 @@ export class MenuComponent implements OnInit {
   // 设置菜单选中
   setActiveMenu(url, br) {
     this.menu.forEach(item => {
-      let isActive = false;
       item.children.forEach(subItem => {
         if (br + subItem.path === url) {
           subItem.active = true;
-          isActive = true;
         } else {
           subItem.active = false;
         }
       });
-      if (isActive || br + item.path === url) {
+      if (url.indexOf(item.path)!=-1) {
         item.active = true;
         item.show = true;
       } else {
@@ -91,6 +87,10 @@ export class MenuComponent implements OnInit {
   }
 
   bigMenu(item) {
+    if(!item.children.length){
+      this.setActiveMenu(item.path, '');
+      this.router.navigateByUrl('/admin/' + item.path);
+    }
     item.show = !item.show;
   }
 }

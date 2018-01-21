@@ -6,6 +6,7 @@ import {RouterModule} from '@angular/router';
 import { ElModule } from 'element-angular';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '../common/shared.module';
+import {RouterInterceptorService} from '../common/service/RouterInterceptorService'
 
 
 import {AppComponent} from './component/app/app.component';
@@ -23,7 +24,7 @@ import {mainRoutes, mainComponentList} from './main.routes';
     SharedModule,
     RouterModule.forRoot(mainRoutes, {useHash: true})
   ],
-  providers: [],
+  providers: [RouterInterceptorService],
   bootstrap: [AppComponent]
 })
 

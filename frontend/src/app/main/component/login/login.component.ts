@@ -31,7 +31,6 @@ export class LoginComponent implements OnInit {
       .then(response => {
         const rep = (response as any);
         if (rep.code == 0) {
-          debugger
           localStorage.setItem('userName', this.login.name);
           localStorage.setItem('token', rep.data.token);
           this.router.navigateByUrl('/admin/user');
@@ -39,5 +38,7 @@ export class LoginComponent implements OnInit {
           console.log(data);
         }
       });
+    localStorage.setItem('userName', this.login.name);
+    this.router.navigateByUrl('/admin/user');
   }
 }

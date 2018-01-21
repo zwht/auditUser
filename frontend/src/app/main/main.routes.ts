@@ -3,7 +3,7 @@ import {NotFoundComponent} from './component/not-found/not-found.component';
 import {MenuComponent} from './component/menu/menu.component';
 import {ClientListComponent} from './component/client-list/client-list.component';
 import {LogListComponent} from './component/log-list/log-list.component';
-
+import {RouterInterceptorService} from '../common/service/RouterInterceptorService'
 
 export const mainRoutes = [
   {
@@ -34,11 +34,13 @@ export const mainRoutes = [
         component: LogListComponent,
         data: {name: '日志管理1'}
       }
-    ]
+    ],
+    canActivate:[ RouterInterceptorService ]
   },
   {
     path: '**',
-    component: NotFoundComponent
+    component: NotFoundComponent,
+    canActivate:[ RouterInterceptorService ]
   }
 
 ];

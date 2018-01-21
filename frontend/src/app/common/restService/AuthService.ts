@@ -11,7 +11,7 @@ export class AuthService {
 
   login(loginVo): Promise<void> {
     return this.http.post(this.url + 'login',
-      JSON.stringify(loginVo))
+      $.param(loginVo))
       .toPromise()
       .then(response => response.json())
       .catch(HandleError);
@@ -21,7 +21,7 @@ export class AuthService {
 
   logout(userId: string): Promise<void> {
     return this.http.post(this.url + 'logout',
-      JSON.stringify({userId: userId}))
+      $.param({userId: userId}))
       .toPromise()
       .then(() => null)
       .catch(HandleError);

@@ -14,7 +14,7 @@ export class MenuComponent implements OnInit {
   rightDown: any[] = [
     {
       value: 'my',
-      label: '个人中心',
+      label: '修改密码',
     },
     {
       value: 'exit',
@@ -26,7 +26,16 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnInit() {
+    const userType = localStorage.getItem('userType');
     this.router.config[1].children.forEach(item => {
+
+      if (item.data.type) {
+        const key = false;
+        item.data.type.forEach(ob1 => {
+          if (ob1 == userType) key = true;
+        });
+        if (!key) return;
+      }
       if (item.data && (item.data as any).menu) {
         const itemMenu = {path: item.path, name: (item.data as any).name, children: []};
         this.routesMenu.forEach(subItem => {
@@ -50,12 +59,13 @@ export class MenuComponent implements OnInit {
   downChange(data) {
     switch (data.value) {
       case 'my': {
+        this.router.navigate(['/admin/user/detail']);
         break;
       }
       case 'exit': {
         localStorage.removeItem('token');
         localStorage.removeItem('userName');
-        window.location.href = '#';
+        this.router.navigate(['/']);
         break;
       }
     }
@@ -71,7 +81,7 @@ export class MenuComponent implements OnInit {
           subItem.active = false;
         }
       });
-      if (url.indexOf(item.path)!=-1) {
+      if (url.indexOf(item.path) != -1) {
         item.active = true;
         item.show = true;
       } else {
@@ -87,7 +97,7 @@ export class MenuComponent implements OnInit {
   }
 
   bigMenu(item) {
-    if(!item.children.length){
+    if (!item.children.length) {
       this.setActiveMenu(item.path, '');
       this.router.navigateByUrl('/admin/' + item.path);
     }

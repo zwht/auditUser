@@ -26,19 +26,30 @@ export class LoginComponent implements OnInit {
   onLogin(data) {
     this.authService.login({
       login_name: this.login.name,
-      login_pwd: this.login.password
+      login_pwd: Md5.hashStr(this.login.password)
     })
       .then(response => {
         const rep = (response as any);
         if (rep.code == 0) {
-          localStorage.setItem('userName', this.login.name);
-          localStorage.setItem('token', rep.data.token);
-          this.router.navigateByUrl('/admin/user');
+          localStorage.setItem('userLoginName', this.login.name);
+          localStorage.setItem('userName', rep.user_name);
+          localStorage.setItem('userType', rep.user_type);
+          //localStorage.setItem('token', rep.data.token);
+          switch (rep.user_type){
+            case '1':
+              this.router.navigateByUrl('/admin/client');
+              break;
+            case '0':
+              this.router.navigateByUrl('/admin/user/audit');
+              break;
+            case '2':
+              this.router.navigateByUrl('/admin/user/audit');
+              break;
+          }
+
         } else {
           console.log(data);
         }
       });
-    localStorage.setItem('userName', this.login.name);
-    this.router.navigateByUrl('/admin/user');
   }
 }

@@ -1,0 +1,30 @@
+<div class="userDetial viewBox">
+  <div class="zwSearch">
+    <div class="left">
+      <span>{{title}}</span>
+    </div>
+    <div class="right">
+    </div>
+  </div>
+  <div class="viewMain">
+    <div class="addFrom">
+      <label>
+        <span>登&nbsp;&nbsp;录&nbsp;&nbsp;名：</span>
+        <el-input [elDisabled]="true" [(ngModel)]="user.login_name" placeholder="请输入登录名"></el-input>
+      </label>
+      <label>
+        <span>密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：</span>
+        <el-input [(ngModel)]="user.login_pwd" placeholder="请输入密码" native-type="password"></el-input>
+      </label>
+      <label>
+        <span>再次输入：</span>
+        <el-input [(ngModel)]="user.login_pwd1" placeholder="请输入密码" native-type="password"></el-input>
+      </label>
+      <br>
+      <el-button (click)="save()" [plain]="true" type="success">保存</el-button>
+    </div>
+  </div>
+</div>
+
+
+

@@ -17,7 +17,7 @@ export class LogService {
   // 添加
   public add(gx): Promise<void> {
     return this.http.post(this.url + 'add',
-      JSON.stringify(gx))
+      $.param(gx))
       .toPromise()
       .then(response => response.json())
       .catch(HandleError);
@@ -41,7 +41,7 @@ export class LogService {
 
   public update(gx): Promise<void> {
     return this.http.post(this.url + 'update',
-      JSON.stringify(gx))
+      $.param(gx))
       .toPromise()
       .then(response => response.json())
       .catch(HandleError);

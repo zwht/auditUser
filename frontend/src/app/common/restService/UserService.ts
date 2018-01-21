@@ -34,11 +34,21 @@ export class UserService {
   // 添加用户
   public add(user: User): Promise<void> {
     return this.http.post(this.url + 'add_user',
-      JSON.stringify(user))
+      $.param(user))
       .toPromise()
       .then(response => response.json())
       .catch(HandleError);
   }
+  // 添加用户
+  public change_pwd(user): Promise<void> {
+    return this.http.post(this.url + 'change_pwd',
+      $.param(user))
+      .toPromise()
+      .then(response => response.json())
+      .catch(HandleError);
+  }
+
+
 
   public del(id: String): Promise<void> {
     return this.http.get(this.url + 'del?id=' + id)

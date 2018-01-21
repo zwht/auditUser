@@ -33,7 +33,10 @@ export class ListComponent implements OnInit {
   }
 
   add(item) {
-    this.router.navigate(['/admin/user/add'], {queryParams: {id: item ? item.id : ''}});
+    this.router.navigate(['/admin/user/add',this.userType], {
+      queryParams: {id: item ? item.id : ''}
+    });
+
   }
 
   getList() {

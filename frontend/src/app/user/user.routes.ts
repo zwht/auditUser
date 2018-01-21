@@ -36,7 +36,7 @@ export const routes: Routes = [
         }
       },
       {
-        path: 'add',
+        path: 'add/:type',
         component: AddComponent,
         data: {
           name: '添加用户'

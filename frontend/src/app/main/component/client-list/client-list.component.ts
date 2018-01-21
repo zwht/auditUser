@@ -12,7 +12,7 @@ export class ClientListComponent implements OnInit {
   total = 0;
   pageNum = 1;
   loading = false;
-
+  userType = localStorage.getItem('userType');
   constructor(private clientService: ClientService,
               private router: Router) {
   }
@@ -22,7 +22,7 @@ export class ClientListComponent implements OnInit {
   }
 
   add(item) {
-    this.router.navigate(['/admin/user/add'], {queryParams: {id: item ? item.id : ''}});
+    this.router.navigate(['/admin/client/add'], {queryParams: {id: item ? item.id : ''}});
   }
 
   getList() {

@@ -4,6 +4,9 @@ import {MenuComponent} from './component/menu/menu.component';
 import {ClientListComponent} from './component/client-list/client-list.component';
 import {LogListComponent} from './component/log-list/log-list.component';
 import {RouterInterceptorService} from '../common/service/RouterInterceptorService'
+import {ClientAddComponent} from './component/client-add/client-add.component';
+import {UserDetailComponent} from './component/user-detail/user-detail.component';
+
 
 export const mainRoutes = [
   {
@@ -17,7 +20,10 @@ export const mainRoutes = [
       {
         path: 'user',
         loadChildren: 'app/user/user.module#UserModule',
-        data: {name: '系统用户管理', menu: true}
+        data: {
+          name: '系统用户管理', menu: true,
+          type: [0]
+        }
       },
       {
         path: 'client',
@@ -25,24 +31,31 @@ export const mainRoutes = [
         data: {name: '客户管理', menu: true}
       },
       {
-        path: 'log',
-        component: LogListComponent,
-        data: {name: '日志管理', menu: true}
+        path: 'client/add',
+        component: ClientAddComponent,
+        data: {name: '客户添加'}
       },
       {
-        path: 'log/33',
+        path: 'user/detail',
+        component: UserDetailComponent,
+        data: {name: '用户详情'}
+      },
+      {
+        path: 'log',
         component: LogListComponent,
-        data: {name: '日志管理1'}
+        data: {name: '日志管理', menu: true,
+          type: [0]
+        }
       }
     ],
-    canActivate:[ RouterInterceptorService ]
+    canActivate: [RouterInterceptorService]
   },
   {
     path: '**',
     component: NotFoundComponent,
-    canActivate:[ RouterInterceptorService ]
+    canActivate: [RouterInterceptorService]
   }
 
 ];
 
-export const mainComponentList = [LogListComponent, ClientListComponent, LoginComponent, NotFoundComponent, MenuComponent];
+export const mainComponentList = [UserDetailComponent, ClientAddComponent, LogListComponent, ClientListComponent, LoginComponent, NotFoundComponent, MenuComponent];

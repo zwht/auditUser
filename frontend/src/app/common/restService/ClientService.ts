@@ -16,7 +16,7 @@ export class ClientService {
   // 添加
   public add(color): Promise<void> {
     return this.http.post(this.url + 'add',
-      JSON.stringify(color))
+      $.param(color))
       .toPromise()
       .then(response => response.json())
       .catch(HandleError);
@@ -50,7 +50,7 @@ export class ClientService {
 
   public update(color): Promise<void> {
     return this.http.post(this.url + 'update',
-      JSON.stringify(color))
+      $.param(color))
       .toPromise()
       .then(response => response.json())
       .catch(HandleError);

@@ -555,7 +555,6 @@ var UserService = (function () {
  * Created by zhaowei on 2017/10/23.
  */
 /* harmony default export */ __webpack_exports__["a"] = (function (error) {
-    debugger;
     console.error('发生错误', error);
     return Promise.reject(error.message || error);
 });
@@ -681,6 +680,48 @@ var HttpInterceptorService = (function (_super) {
 
 /***/ }),
 
+/***/ "../../../../../src/app/common/service/RouterInterceptorService.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RouterInterceptorService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var RouterInterceptorService = (function () {
+    function RouterInterceptorService(router) {
+        this.router = router;
+    }
+    RouterInterceptorService.prototype.canActivate = function (route, state) {
+        if (localStorage.getItem('userName')) {
+            return true;
+        }
+        else {
+            this.router.navigate(['/']);
+            return false;
+        }
+    };
+    RouterInterceptorService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]])
+    ], RouterInterceptorService);
+    return RouterInterceptorService;
+}());
+
+
+
+/***/ }),
+
 /***/ "../../../../../src/app/common/shared.module.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -796,7 +837,7 @@ var AppComponent = (function () {
 /***/ "../../../../../src/app/main/component/client-list/client-list.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"clientList viewBox\">\n  <div class=\"zwSearch\">\n    <div class=\"right\">\n      <el-button (click)=\"add()\" size=\"mini\" type=\"primary\">添加</el-button>\n    </div>\n  </div>\n  <div class=\"viewMain\">\n    <table class=\"zwTable\">\n      <tr>\n        <th>车主姓名</th>\n        <th>用户住址</th>\n        <th>身份证</th>\n        <th>车主电话</th>\n        <th>品牌</th>\n        <th>车辆类型</th>\n        <th>颜色</th>\n        <th>车牌号</th>\n        <th>审核</th>\n        <th>审核时间</th>\n        <th>审核人</th>\n        <th>操作</th>\n      </tr>\n      <tr *ngFor=\"let item of list let i=index\">\n        <td>{{item.contact}}</td>\n        <td>{{item.address}}</td>\n        <td>{{item.idcard}}</td>\n        <td>{{item.contacttel}}</td>\n        <td>{{item.brand}}</td>\n        <td>{{item.cartype}}</td>\n        <td>{{item.color}}</td>\n        <td>{{item.licenseplate}}</td>\n        <td class=\"el-tag-box\">\n          <el-tag *ngIf=\"item.op_flag==1\" type=\"success\">已审核</el-tag>\n          <el-tag *ngIf=\"item.op_flag!=1\" type=\"warning\">未审核</el-tag>\n        </td>\n        <td>{{item.op_time}}</td>\n        <td>{{item.op_name}}</td>\n        <td style=\"width: 180px; text-align: center;\">\n          <el-button (click)=\"add(item)\" size=\"mini\" type=\"success\" icon=\"edit\">编辑</el-button>\n          <el-button (click)=\"verify(item.id)\" size=\"mini\" type=\"success\" icon=\"edit\">审核</el-button>\n        </td>\n      </tr>\n    </table>\n    <div class=\"pageBox\">\n      <el-pagination *ngIf=\"total\" [total]=\"total\"\n                     [page-size]=\"20\"\n                     [(model)]=\"pageNum\"\n                     (modelChange)=\"getList()\"\n                     [layout]=\"['prev', 'pager', 'next', 'jumper', 'total']\">\n      </el-pagination>\n    </div>\n\n  </div>\n</div>\n\n\n"
+module.exports = "<div class=\"clientList viewBox\">\n  <div class=\"zwSearch\">\n    <div class=\"right\">\n      <el-button (click)=\"add()\" size=\"mini\" type=\"primary\">添加</el-button>\n    </div>\n  </div>\n  <div class=\"viewMain\"  [el-loading]=\"loading\" [text]=\"'拼命加载中'\">\n    <div class=\"noData\" *ngIf=\"!list.length\">\n      <span>没有数据...</span>\n    </div>\n    <table class=\"zwTable\">\n      <tr>\n        <th>车主姓名</th>\n        <th>用户住址</th>\n        <th>身份证</th>\n        <th>车主电话</th>\n        <th>品牌</th>\n        <th>车辆类型</th>\n        <th>颜色</th>\n        <th>车牌号</th>\n        <th>审核</th>\n        <th>审核时间</th>\n        <th>审核人</th>\n        <th>操作</th>\n      </tr>\n      <tr *ngFor=\"let item of list let i=index\">\n        <td>{{item.contact}}</td>\n        <td>{{item.address}}</td>\n        <td>{{item.idcard}}</td>\n        <td>{{item.contacttel}}</td>\n        <td>{{item.brand}}</td>\n        <td>{{item.cartype}}</td>\n        <td>{{item.color}}</td>\n        <td>{{item.licenseplate}}</td>\n        <td class=\"el-tag-box\">\n          <el-tag *ngIf=\"item.op_flag==1\" type=\"success\">已审核</el-tag>\n          <el-tag *ngIf=\"item.op_flag!=1\" type=\"warning\">未审核</el-tag>\n        </td>\n        <td>{{item.op_time}}</td>\n        <td>{{item.op_name}}</td>\n        <td style=\"width: 200px;\">\n          <el-button (click)=\"add(item)\" size=\"mini\" type=\"success\" icon=\"edit\" [plain]=\"true\">编辑</el-button>\n          <el-button *ngIf=\"item.op_flag!=1\" (click)=\"verify(item.id)\" size=\"mini\"  type=\"primary\" icon=\"circle-check\"\n                     [plain]=\"true\">审核通过</el-button>\n        </td>\n      </tr>\n    </table>\n    <div class=\"pageBox\">\n      <el-pagination *ngIf=\"total\" [total]=\"total\"\n                     [page-size]=\"20\"\n                     [(model)]=\"pageNum\"\n                     (modelChange)=\"getList()\"\n                     [layout]=\"['prev', 'pager', 'next', 'jumper', 'total']\">\n      </el-pagination>\n    </div>\n\n  </div>\n</div>\n\n\n"
 
 /***/ }),
 
@@ -808,7 +849,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".clientList .el-tag-box /deep/ .el-tag {\n  border-radius: 20px;\n  height: 20px;\n  line-height: 20px;\n}\n", ""]);
+exports.push([module.i, "", ""]);
 
 // exports
 
@@ -845,6 +886,7 @@ var ClientListComponent = (function () {
         this.list = [];
         this.total = 0;
         this.pageNum = 1;
+        this.loading = false;
     }
     ClientListComponent.prototype.ngOnInit = function () {
         this.getList();
@@ -854,12 +896,14 @@ var ClientListComponent = (function () {
     };
     ClientListComponent.prototype.getList = function () {
         var _this = this;
+        this.loading = true;
         this.clientService.list({
             pageNum: this.pageNum,
             pageSize: 10,
             search: ''
         }, {})
             .then(function (response) {
+            _this.loading = false;
             var rep = response;
             if (rep.code == 0) {
                 _this.total = response.pageCount;
@@ -906,7 +950,7 @@ var ClientListComponent = (function () {
 /***/ "../../../../../src/app/main/component/log-list/log-list.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"clientList viewBox\">\n  <div class=\"zwSearch\">\n    <div class=\"right\">\n    </div>\n  </div>\n  <div class=\"viewMain\">\n    <table class=\"zwTable\">\n      <tr>\n        <th>操作内容</th>\n        <th>操作人</th>\n        <th>操作人Ip</th>\n        <th>时间</th>\n      </tr>\n      <tr *ngFor=\"let item of list let i=index\">\n        <td>{{item.op_content}}</td>\n        <td>{{item.op_user}}</td>\n        <td>{{item.ip_address}}</td>\n        <td>{{item.op_time}}</td>\n      </tr>\n    </table>\n    <div class=\"pageBox\">\n      <el-pagination *ngIf=\"total\" [total]=\"total\"\n                     [page-size]=\"20\"\n                     [(model)]=\"pageNum\"\n                     (modelChange)=\"getList()\"\n                     [layout]=\"['prev', 'pager', 'next', 'jumper', 'total']\">\n      </el-pagination>\n    </div>\n\n  </div>\n</div>\n\n\n"
+module.exports = "<div class=\"clientList viewBox\">\n  <div class=\"zwSearch\">\n    <div class=\"right\">\n    </div>\n  </div>\n  <div class=\"viewMain\" [el-loading]=\"loading\" [text]=\"'拼命加载中'\">\n    <div class=\"noData\" *ngIf=\"!list.length\">\n      <span>没有数据...</span>\n    </div>\n    <table class=\"zwTable\">\n      <tr>\n        <th>操作内容</th>\n        <th>操作人</th>\n        <th>操作人Ip</th>\n        <th>时间</th>\n      </tr>\n      <tr *ngFor=\"let item of list let i=index\">\n        <td>{{item.op_content}}</td>\n        <td>{{item.op_user}}</td>\n        <td>{{item.ip_address}}</td>\n        <td>{{item.op_time}}</td>\n      </tr>\n    </table>\n    <div class=\"pageBox\">\n      <el-pagination *ngIf=\"total\" [total]=\"total\"\n                     [page-size]=\"20\"\n                     [(model)]=\"pageNum\"\n                     (modelChange)=\"getList()\"\n                     [layout]=\"['prev', 'pager', 'next', 'jumper', 'total']\">\n      </el-pagination>\n    </div>\n\n  </div>\n</div>\n\n\n"
 
 /***/ }),
 
@@ -955,6 +999,7 @@ var LogListComponent = (function () {
         this.list = [];
         this.total = 0;
         this.pageNum = 1;
+        this.loading = false;
     }
     LogListComponent.prototype.ngOnInit = function () {
         this.getList();
@@ -964,12 +1009,14 @@ var LogListComponent = (function () {
     };
     LogListComponent.prototype.getList = function () {
         var _this = this;
+        this.loading = true;
         this.logService.list({
             pageNum: this.pageNum,
             pageSize: 10,
             search: ''
         }, {})
             .then(function (response) {
+            _this.loading = false;
             var rep = response;
             if (rep.code == 0) {
                 _this.total = response.pageCount;
@@ -1082,7 +1129,6 @@ var LoginComponent = (function () {
             .then(function (response) {
             var rep = response;
             if (rep.code == 0) {
-                debugger;
                 localStorage.setItem('userName', _this.login.name);
                 localStorage.setItem('token', rep.data.token);
                 _this.router.navigateByUrl('/admin/user');
@@ -1091,6 +1137,8 @@ var LoginComponent = (function () {
                 console.log(data);
             }
         });
+        localStorage.setItem('userName', this.login.name);
+        this.router.navigateByUrl('/admin/user');
     };
     LoginComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -1275,7 +1323,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/main/component/not-found/not-found.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div style=\"color: #C00\">\n  not-found works!\n</div>\n"
+module.exports = "<div style=\"background: #f8f8f8; height: 100%; color: #999;\n text-align: center; padding: 100px 0; font-size: 16px;\">\n  <img src=\"../../../../assets/images/404.png\" alt=\"\">\n  <p style=\"margin: 10px 0;\">您访问的页面不在地球上，请回火星吧～</p>\n  <el-button (click)=\"back(1)\" [plain]=\"true\" type=\"success\">返回上页</el-button>\n  <el-button (click)=\"back(0)\" [plain]=\"true\" type=\"primary\">返回登录</el-button>\n</div>\n"
 
 /***/ }),
 
@@ -1285,6 +1333,7 @@ module.exports = "<div style=\"color: #C00\">\n  not-found works!\n</div>\n"
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NotFoundComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1295,10 +1344,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var NotFoundComponent = (function () {
-    function NotFoundComponent() {
+    function NotFoundComponent(router) {
+        this.router = router;
     }
     NotFoundComponent.prototype.ngOnInit = function () {
+    };
+    NotFoundComponent.prototype.back = function (key) {
+        if (key) {
+            window.history.back();
+        }
+        else {
+            this.router.navigate(['/']);
+        }
     };
     NotFoundComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -1306,7 +1365,7 @@ var NotFoundComponent = (function () {
             template: __webpack_require__("../../../../../src/app/main/component/not-found/not-found.component.html"),
             styles: [__webpack_require__("../../../../../src/app/main/component/not-found/not-found.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]])
     ], NotFoundComponent);
     return NotFoundComponent;
 }());
@@ -1328,8 +1387,9 @@ var NotFoundComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_element_angular__ = __webpack_require__("../../../../element-angular/release/element-angular.module.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_platform_browser_animations__ = __webpack_require__("../../../platform-browser/esm5/animations.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__common_shared_module__ = __webpack_require__("../../../../../src/app/common/shared.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__component_app_app_component__ = __webpack_require__("../../../../../src/app/main/component/app/app.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__main_routes__ = __webpack_require__("../../../../../src/app/main/main.routes.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__common_service_RouterInterceptorService__ = __webpack_require__("../../../../../src/app/common/service/RouterInterceptorService.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__component_app_app_component__ = __webpack_require__("../../../../../src/app/main/component/app/app.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__main_routes__ = __webpack_require__("../../../../../src/app/main/main.routes.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1346,12 +1406,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
 var MainModule = (function () {
     function MainModule() {
     }
     MainModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["J" /* NgModule */])({
-            declarations: [].concat([__WEBPACK_IMPORTED_MODULE_8__component_app_app_component__["a" /* AppComponent */]], __WEBPACK_IMPORTED_MODULE_9__main_routes__["a" /* mainComponentList */]),
+            declarations: [].concat([__WEBPACK_IMPORTED_MODULE_9__component_app_app_component__["a" /* AppComponent */]], __WEBPACK_IMPORTED_MODULE_10__main_routes__["a" /* mainComponentList */]),
             imports: [
                 __WEBPACK_IMPORTED_MODULE_5_element_angular__["a" /* ElModule */].forRoot(),
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
@@ -1359,10 +1420,10 @@ var MainModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */],
                 __WEBPACK_IMPORTED_MODULE_3__angular_http__["d" /* HttpModule */],
                 __WEBPACK_IMPORTED_MODULE_7__common_shared_module__["a" /* SharedModule */],
-                __WEBPACK_IMPORTED_MODULE_4__angular_router__["c" /* RouterModule */].forRoot(__WEBPACK_IMPORTED_MODULE_9__main_routes__["b" /* mainRoutes */], { useHash: true })
+                __WEBPACK_IMPORTED_MODULE_4__angular_router__["c" /* RouterModule */].forRoot(__WEBPACK_IMPORTED_MODULE_10__main_routes__["b" /* mainRoutes */], { useHash: true })
             ],
-            providers: [],
-            bootstrap: [__WEBPACK_IMPORTED_MODULE_8__component_app_app_component__["a" /* AppComponent */]]
+            providers: [__WEBPACK_IMPORTED_MODULE_8__common_service_RouterInterceptorService__["a" /* RouterInterceptorService */]],
+            bootstrap: [__WEBPACK_IMPORTED_MODULE_9__component_app_app_component__["a" /* AppComponent */]]
         })
     ], MainModule);
     return MainModule;
@@ -1383,6 +1444,8 @@ var MainModule = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__component_menu_menu_component__ = __webpack_require__("../../../../../src/app/main/component/menu/menu.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__component_client_list_client_list_component__ = __webpack_require__("../../../../../src/app/main/component/client-list/client-list.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__component_log_list_log_list_component__ = __webpack_require__("../../../../../src/app/main/component/log-list/log-list.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__common_service_RouterInterceptorService__ = __webpack_require__("../../../../../src/app/common/service/RouterInterceptorService.ts");
+
 
 
 
@@ -1417,11 +1480,13 @@ var mainRoutes = [
                 component: __WEBPACK_IMPORTED_MODULE_4__component_log_list_log_list_component__["a" /* LogListComponent */],
                 data: { name: '日志管理1' }
             }
-        ]
+        ],
+        canActivate: [__WEBPACK_IMPORTED_MODULE_5__common_service_RouterInterceptorService__["a" /* RouterInterceptorService */]]
     },
     {
         path: '**',
-        component: __WEBPACK_IMPORTED_MODULE_1__component_not_found_not_found_component__["a" /* NotFoundComponent */]
+        component: __WEBPACK_IMPORTED_MODULE_1__component_not_found_not_found_component__["a" /* NotFoundComponent */],
+        canActivate: [__WEBPACK_IMPORTED_MODULE_5__common_service_RouterInterceptorService__["a" /* RouterInterceptorService */]]
     }
 ];
 var mainComponentList = [__WEBPACK_IMPORTED_MODULE_4__component_log_list_log_list_component__["a" /* LogListComponent */], __WEBPACK_IMPORTED_MODULE_3__component_client_list_client_list_component__["a" /* ClientListComponent */], __WEBPACK_IMPORTED_MODULE_0__component_login_login_component__["a" /* LoginComponent */], __WEBPACK_IMPORTED_MODULE_1__component_not_found_not_found_component__["a" /* NotFoundComponent */], __WEBPACK_IMPORTED_MODULE_2__component_menu_menu_component__["a" /* MenuComponent */]];
@@ -1429,7 +1494,14 @@ var mainComponentList = [__WEBPACK_IMPORTED_MODULE_4__component_log_list_log_lis
 
 /***/ }),
 
-/***/ "../../../../../src/app/user/component/user-add/add.component.css":
+/***/ "../../../../../src/app/user/component/user-add/add.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"addUser viewBox\">\n  <div class=\"zwSearch\">\n    <div class=\"right\">\n    </div>\n  </div>\n  <div class=\"viewMain\">\n    <div class=\"addFrom\">\n      <label>\n        <span>名&nbsp;&nbsp;&nbsp;称：</span>\n        <el-input [(ngModel)]=\"user.user_name\" placeholder=\"请输入用户名\"></el-input>\n      </label>\n      <label>\n        <span>密&nbsp;&nbsp;&nbsp;码：</span>\n        <el-input [(ngModel)]=\"user.login_pwd\" placeholder=\"请输入密码\" native-type=\"password\"></el-input>\n      </label>\n      <label>\n        <span>登录名：</span>\n        <el-input [(ngModel)]=\"user.login_name\" placeholder=\"请输入登录名\"></el-input>\n      </label>\n      <label>\n        <span>类&nbsp;&nbsp;&nbsp;型：</span>\n        <el-select [(model)]=\"user.user_type\" placeholder=\"请选择\">\n          <el-option *ngFor=\"let item of userTypeList\"\n                     [label]=\"item.name\"\n                     [value]=\"item.value\">\n          </el-option>\n        </el-select>\n      </label>\n      <br>\n      <el-button (click)=\"save()\" [plain]=\"true\" type=\"success\">保存</el-button>\n    </div>\n  </div>\n</div>\n\n\n\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/user/component/user-add/add.component.less":
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
@@ -1437,20 +1509,13 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, ".addUser .addFrom {\n  width: 500px;\n  margin: 0 auto;\n}\n.addUser .addFrom label {\n  display: block;\n  margin: 10px 0;\n}\n.addUser .addFrom label el-input,\n.addUser .addFrom label el-select {\n  width: 300px;\n  display: inline-block;\n}\n.addUser .addFrom label /deep/ .el-select {\n  width: 300px;\n}\n.addUser .addFrom /deep/ button {\n  width: 360px;\n}\n", ""]);
 
 // exports
 
 
 /*** EXPORTS FROM exports-loader ***/
 module.exports = module.exports.toString();
-
-/***/ }),
-
-/***/ "../../../../../src/app/user/component/user-add/add.component.html":
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"clientList viewBox\">\n  <div class=\"zwSearch\">\n    <div class=\"right\">\n    </div>\n  </div>\n  <div class=\"viewMain\">\n    <div>\n      <label>\n        <span>名称：</span>\n        <el-input [(ngModel)]=\"user.user_name\" placeholder=\"请输入用户名\"></el-input>\n      </label>\n      <label>\n        <span>密码：</span>\n        <el-input [(ngModel)]=\"user.login_pwd\" placeholder=\"请输入密码\" native-type=\"password\"></el-input>\n      </label>\n      <label>\n        <span>登录名：</span>\n        <el-input [(ngModel)]=\"user.login_name\" placeholder=\"请输入登录名\"></el-input>\n      </label>\n      <label>\n        <span>类型：</span>\n        <el-select [(model)]=\"user.user_type\" placeholder=\"请选择\">\n          <el-option *ngFor=\"let item of userTypeList\"\n                     [label]=\"item.name\"\n                     [value]=\"item.value\">\n          </el-option>\n        </el-select>\n      </label>\n\n      <button (click)=\"save()\" type=\"info\" style=\"width: 100%; margin-top: 30px;\">保存</button>\n    </div>\n  </div>\n</div>\n\n\n\n"
 
 /***/ }),
 
@@ -1544,7 +1609,7 @@ var AddComponent = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'app-add',
             template: __webpack_require__("../../../../../src/app/user/component/user-add/add.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/user/component/user-add/add.component.css")],
+            styles: [__webpack_require__("../../../../../src/app/user/component/user-add/add.component.less")],
             providers: [__WEBPACK_IMPORTED_MODULE_1__common_restService_UserService__["a" /* UserService */]]
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__common_restService_UserService__["a" /* UserService */],
@@ -1579,7 +1644,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/user/component/user-list/list.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"userList viewBox\">\n  <div class=\"zwSearch\">\n    <div class=\"right\">\n      <el-button (click)=\"add()\" size=\"mini\" type=\"primary\">添加</el-button>\n    </div>\n  </div>\n  <div class=\"viewMain\">\n    <table class=\"zwTable\">\n      <tr>\n        <th>名称</th>\n        <th>操作</th>\n      </tr>\n      <tr *ngFor=\"let item of list let i=index\">\n        <td>{{item.name}}</td>\n\n        <td style=\"width: 180px; text-align: center;\">\n          <el-button (click)=\"del(item.id)\" size=\"mini\" type=\"warning\" icon=\"delete\" [plain]=\"true\">删除</el-button>\n          <el-button (click)=\"add(item)\" size=\"mini\" type=\"success\" icon=\"edit\" [plain]=\"true\">编辑</el-button>\n        </td>\n      </tr>\n    </table>\n    <div class=\"pageBox\">\n      <el-pagination *ngIf=\"total\" [total]=\"total\"\n                     [page-size]=\"20\"\n                     [(model)]=\"pageNum\"\n                     (modelChange)=\"getList()\"\n                     [layout]=\"['prev', 'pager', 'next', 'jumper', 'total']\">\n      </el-pagination>\n    </div>\n\n  </div>\n</div>\n\n\n"
+module.exports = "<div class=\"userList viewBox\">\n  <div class=\"zwSearch\">\n    <div class=\"right\">\n      <el-button (click)=\"add()\" size=\"mini\" type=\"primary\">添加</el-button>\n    </div>\n  </div>\n  <div class=\"viewMain\" [el-loading]=\"loading\" [text]=\"'拼命加载中'\">\n    <div class=\"noData\" *ngIf=\"!list.length\">\n      <span>没有数据...</span>\n    </div>\n    <table class=\"zwTable\">\n      <tr>\n        <th>登录名</th>\n        <th>用户名</th>\n        <th>状态</th>\n        <th>操作</th>\n      </tr>\n      <tr *ngFor=\"let item of list let i=index\">\n        <td>{{item.login_name}}</td>\n        <td>{{item.user_name}}</td>\n        <td  class=\"el-tag-box\">\n          <el-tag *ngIf=\"item.user_status==1\" type=\"success\">启用</el-tag>\n          <el-tag *ngIf=\"item.user_status!=1\" type=\"warning\">禁用</el-tag>\n        </td>\n\n        <td style=\"width: 180px; text-align: center;\">\n          <el-button *ngIf=\"item.user_status==1\" (click)=\"del(item.id,0)\" size=\"mini\" type=\"warning\"\n                     icon=\"circle-close\" [plain]=\"true\">禁用\n          </el-button>\n          <el-button *ngIf=\"item.user_status!=1\" (click)=\"del(item.id,1)\" size=\"mini\" type=\"primary\" icon=\"circle-check\"\n                     [plain]=\"true\">启用\n          </el-button>\n          <el-button (click)=\"add(item)\" size=\"mini\" type=\"success\" icon=\"edit\" [plain]=\"true\">编辑</el-button>\n        </td>\n      </tr>\n    </table>\n    <div class=\"pageBox\">\n      <el-pagination *ngIf=\"total\" [total]=\"total\"\n                     [page-size]=\"20\"\n                     [(model)]=\"pageNum\"\n                     (modelChange)=\"getList()\"\n                     [layout]=\"['prev', 'pager', 'next', 'jumper', 'total']\">\n      </el-pagination>\n    </div>\n\n  </div>\n</div>\n\n\n"
 
 /***/ }),
 
@@ -1604,14 +1669,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var ListComponent = (function () {
-    function ListComponent(userService, router) {
+    function ListComponent(userService, router, activatedRoute) {
         this.userService = userService;
         this.router = router;
+        this.activatedRoute = activatedRoute;
         this.list = [];
         this.total = 0;
         this.pageNum = 1;
+        this.userType = 2;
+        this.loading = false;
     }
     ListComponent.prototype.ngOnInit = function () {
+        switch (this.router.url) {
+            case '/admin/user/admin':
+                this.userType = 0;
+                break;
+            case '/admin/user/audit':
+                this.userType = 1;
+                break;
+        }
+        this.activatedRoute.queryParams.subscribe(function (params) {
+        });
         this.getList();
     };
     ListComponent.prototype.add = function (item) {
@@ -1619,17 +1697,18 @@ var ListComponent = (function () {
     };
     ListComponent.prototype.getList = function () {
         var _this = this;
+        this.loading = true;
         this.userService.list({
             pageNum: this.pageNum,
             pageSize: 10,
-            search: ''
+            search: this.userType
         }, {})
             .then(function (response) {
+            _this.loading = false;
             var rep = response;
             if (rep.code == 0) {
                 _this.total = response.pageCount;
                 _this.list = response.data;
-                debugger;
             }
             else {
                 console.log(response);
@@ -1657,7 +1736,8 @@ var ListComponent = (function () {
             providers: [__WEBPACK_IMPORTED_MODULE_1__common_restService_UserService__["a" /* UserService */]]
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__common_restService_UserService__["a" /* UserService */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]])
+            __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]])
     ], ListComponent);
     return ListComponent;
 }());

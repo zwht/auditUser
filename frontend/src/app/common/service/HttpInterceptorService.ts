@@ -67,7 +67,8 @@ export class HttpInterceptorService extends Http {
       options.headers = new Headers();
     }
 
-    options.headers.append('Content-Type', 'application/json; charset=utf-8');
+    // options.headers.append('Content-Type', 'application/json; charset=utf-8');
+    options.headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
     options.headers.append('Authorization', localStorage.getItem('token'));
     return options;
   }

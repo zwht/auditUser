@@ -11,7 +11,7 @@ export class ClientService {
   }
 
   /**获取用户列表**/
-  private url = '/api/';
+  private url = '/ums/index.php/api/';
 
   // 添加
   public add(color): Promise<void> {

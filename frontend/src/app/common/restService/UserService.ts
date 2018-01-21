@@ -12,7 +12,7 @@ export class UserService {
   }
 
   /**获取用户列表**/
-  private url = '/api/';
+  private url = '/ums/index.php/api/';
 
   public list(obj: Object, obj1: Object): Promise<void> {
     return this.http.get(this.url +

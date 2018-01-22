@@ -52,7 +52,7 @@
       <el-pagination *ngIf="total" [total]="total"
                      [page-size]="pageSize"
                      [(model)]="pageNum"
-                     (modelChange)="getList()"
+                     (modelChange)="getList(0)"
                      [layout]="['prev', 'pager', 'next', 'jumper', 'total']">
       </el-pagination>
     </div>

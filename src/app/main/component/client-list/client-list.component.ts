@@ -25,7 +25,7 @@ export class ClientListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getList();
+    this.getList(0);
   }
 
   add(item) {
@@ -33,7 +33,7 @@ export class ClientListComponent implements OnInit {
   }
 
   getList(key) {
-    if(key) this.pageNum=1;
+    if (key) this.pageNum = 1;
     this.loading = true;
     (this.clientService as any).list({
       pageNum: this.pageNum,
@@ -67,7 +67,7 @@ export class ClientListComponent implements OnInit {
         this.toggle = false;
         const rep = (response as any);
         if (rep.code == 0) {
-          this.getList();
+          this.getList(0);
         } else {
           console.log(response);
         }

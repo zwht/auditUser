@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {UserList} from '../../../user/user.routes';
-
+import {AuthService} from '../../../common/restService/AuthService';
 import {Router} from '@angular/router';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.less']
+  styleUrls: ['./menu.component.less'],
+  providers: [AuthService]
 })
 export class MenuComponent implements OnInit {
   menu = [];
@@ -22,7 +23,8 @@ export class MenuComponent implements OnInit {
     }
   ];
 
-  constructor(private router: Router) {
+  constructor(private router: Router,
+              private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -65,6 +67,9 @@ export class MenuComponent implements OnInit {
         break;
       }
       case 'exit': {
+        (this.authService as any).logout({}, {})
+          .then(response => {
+          });
         localStorage.removeItem('token');
         localStorage.removeItem('userName');
         this.router.navigate(['/']);

@@ -28,7 +28,7 @@ export const mainRoutes = [
       {
         path: 'client',
         component: ClientListComponent,
-        data: {name: '客户管理', menu: true}
+        data: {name: '车辆信息', menu: true}
       },
       {
         path: 'client/add',

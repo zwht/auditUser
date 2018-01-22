@@ -27,7 +27,8 @@ export class LogListComponent implements OnInit {
     this.router.navigate(['/admin/user/add'], {queryParams: {id: item ? item.id : ''}});
   }
 
-  getList() {
+  getList(key) {
+    if(key) this.pageNum=1;
     this.loading = true;
     (this.logService as any).list({
       pageNum: this.pageNum,

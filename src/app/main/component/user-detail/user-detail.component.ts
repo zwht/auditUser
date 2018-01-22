@@ -29,18 +29,23 @@ export class UserDetailComponent implements OnInit {
   }
 
   save() {
+    if(!this.user.login_pwd||!this.user.login_pwd1){
+      this.message.error('请输入密码');
+      return;
+    }
     if(this.user.login_pwd!=this.user.login_pwd1){
       this.message.error('两次密码不匹配');
       return;
     }
     (this.userService as any).change_pwd({
       login_name: this.user.login_name,
-      login_pwd: Md5.hashStr(this.user.login_pwd)
+      change_pwd: Md5.hashStr(this.user.login_pwd)
     })
       .then(response => {
         const rep = (response as any);
         if (rep.code == 0) {
-          window.history.back()
+          this.message.success('密码修改成功！');
+          //window.history.back()
         } else {
           console.log(response);
         }

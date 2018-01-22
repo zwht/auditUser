@@ -17,13 +17,10 @@ export class AuthService {
       .catch(HandleError);
   }
 
-  // 注销
-
-  logout(userId: string): Promise<void> {
-    return this.http.post(this.url + 'logout',
-      $.param({userId: userId}))
+  logout(): Promise<void> {
+    return this.http.get(this.url + 'logout')
       .toPromise()
-      .then(() => null)
+      .then(response => response.json())
       .catch(HandleError);
   }
 }

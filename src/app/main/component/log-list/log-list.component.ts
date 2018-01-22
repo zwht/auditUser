@@ -20,7 +20,7 @@ export class LogListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getList();
+    this.getList(0);
   }
 
   add(item) {
@@ -56,7 +56,7 @@ export class LogListComponent implements OnInit {
       .then(response => {
         const rep = (response as any);
         if (rep.code == 0) {
-          this.getList();
+          this.getList(0);
         } else {
           console.log(response);
         }

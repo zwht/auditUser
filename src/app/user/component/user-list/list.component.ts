@@ -33,7 +33,7 @@ export class ListComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
 
     });
-    this.getList();
+    this.getList(0);
   }
 
   add(item) {
@@ -75,7 +75,7 @@ export class ListComponent implements OnInit {
       .then(response => {
         const rep = (response as any);
         if (rep.code == 0) {
-          this.getList();
+          this.getList(0);
         } else {
           console.log(response);
         }

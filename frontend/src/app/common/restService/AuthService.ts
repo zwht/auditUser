@@ -7,7 +7,7 @@ export class AuthService {
   }
 
   // 登陆
-  private url = '/ums/index.php/api/';
+  private url = '/api/';
 
   login(loginVo): Promise<void> {
     return this.http.post(this.url + 'login',

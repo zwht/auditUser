@@ -9,3 +9,12 @@ Error: Cannot find module '/Users/zhaowei/projects/zw/auditUser/frontend/build-s
     at run (bootstrap_node.js:389:7)
     at startup (bootstrap_node.js:149:9)
     at bootstrap_node.js:502:3
+[HPM] Proxy created: /  ->  http://etl-server-ip:18083
+[HPM] Proxy created: /  ->  http://idmanager-server-ip:9000
+Server started: http://localhost:8991/
+[HPM] Proxy created: /  ->  http://api.96789.ltd:8080
+[HPM] Proxy created: /  ->  http://idmanager-server-ip:9000
+Server started: http://localhost:8991/
+[HPM] Proxy created: /  ->  http://api.96789.ltd:8080/index.php
+[HPM] Proxy created: /  ->  http://idmanager-server-ip:9000
+Server started: http://localhost:8991/

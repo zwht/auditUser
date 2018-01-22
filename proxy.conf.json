@@ -1,0 +1,6 @@
+{
+  "/api": {
+    "target": "http://api.96789.ltd:8080/index.php",
+    "secure": false
+  }
+}

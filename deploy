@@ -1,0 +1,56 @@
+#!/bin/sh
+echo&nbsp;-ne "\033[0;33m"
+cat<<EOT
+
+                                前端开始打包了
+
+                                  _oo0oo_
+                                 088888880
+                                 88" . "88
+                                 (| -_- |)
+                                  0\ = /0
+                               ___/'---'\___
+                             .' \\\\|     |// '.
+                            / \\\\|||  :  |||// \\
+                           /_ ||||| -:- |||||- \\
+                          |   | \\\\\\  -  /// |   |
+                          | \_|  ''\---/''  |_/ |
+                          \  .-\__  '-'  __/-.  /
+                        ___'. .'  /--.--\  '. .'___
+                     ."" '<  '.___\_<|>_/___.' >'  "".
+                    | | : '-  \'.;'\ _ /';.'/ - ' : | |
+                    \  \ '_.   \_ __\ /__ _/   .-' /  /
+                ====='-.____'.___ \_____/___.-'____.-'=====
+                                  '=---='
+
+
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        佛祖保佑    iii    没有bug
+EOT
+git stash
+git pull
+echo "--删除dist--"
+rm -drf ./dist
+
+echo "============打包==================="
+cnpm install
+npm run build
+echo "============运行==================="
+
+name=$(lsof -i:8999|tail -1|awk '"$1"!=""{print $2}')
+if [ -z $name ]
+then
+    nohup node build-server &
+    #node app
+    echo "Server started: http://localhost:8999"
+    exit 0
+else
+    id=$(lsof -i:8999|tail -1|awk '"$1"!=""{print $2}')
+    kill -9 $id
+    echo "Process name=$name($id) kill!"
+    nohup node build-server &
+    echo "Server started: http://localhost:8999"
+    exit 0
+fi
+
+

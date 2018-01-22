@@ -1,0 +1,63 @@
+<div class="clientList viewBox">
+  <div class="zwSearch">
+    <div>
+      <span style="color: #999;">关键字搜索：</span>
+      <el-input style="width: 200px; display: inline-block;" [(ngModel)]="search" placeholder="请输入"></el-input>
+      <el-button (click)="getList()" [plain]="true" type="success">搜索</el-button>
+    </div>
+    <div class="right">
+      <!--<el-button *ngIf="userType!=2" (click)="add()" size="mini" type="primary">添加</el-button>--></div>
+  </div>
+  <div class="viewMain"  [el-loading]="loading" [text]="'拼命加载中'">
+    <div class="noData" *ngIf="!list.length">
+      <span>没有数据...</span>
+    </div>
+    <table class="zwTable">
+      <tr>
+        <th>车主姓名</th>
+        <th>用户住址</th>
+        <th>身份证</th>
+        <th>车主电话</th>
+        <th>品牌</th>
+        <th>车辆类型</th>
+        <th>颜色</th>
+        <th>车牌号</th>
+        <th>审核</th>
+        <th>审核时间</th>
+        <th>审核人</th>
+        <th *ngIf="userType!=2">操作</th>
+      </tr>
+      <tr *ngFor="let item of list let i=index">
+        <td>{{item.contact}}</td>
+        <td>{{item.address}}</td>
+        <td>{{item.idcard}}</td>
+        <td>{{item.contacttel}}</td>
+        <td>{{item.brand}}</td>
+        <td>{{item.cartype}}</td>
+        <td>{{item.color}}</td>
+        <td>{{item.licenseplate}}</td>
+        <td class="el-tag-box">
+          <el-tag *ngIf="item.op_flag==1" type="success">已审核</el-tag>
+          <el-tag *ngIf="item.op_flag!=1" type="warning">未审核</el-tag>
+        </td>
+        <td>{{item.op_time}}</td>
+        <td>{{item.op_name}}</td>
+        <td style="width: 120px; text-align: center;" *ngIf="userType!=2">
+          <el-button *ngIf="item.op_flag!=1" (click)="verify(item.id)" size="mini"  type="primary" icon="circle-check"
+                     [plain]="true">审核通过</el-button>
+        </td>
+      </tr>
+    </table>
+    <div class="pageBox">
+      <el-pagination *ngIf="total" [total]="total"
+                     [page-size]="pageSize"
+                     [(model)]="pageNum"
+                     (modelChange)="getList()"
+                     [layout]="['prev', 'pager', 'next', 'jumper', 'total']">
+      </el-pagination>
+    </div>
+
+  </div>
+</div>
+
+

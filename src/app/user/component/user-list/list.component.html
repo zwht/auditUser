@@ -1,0 +1,54 @@
+<div class="userList viewBox">
+  <div class="zwSearch">
+    <div style="float: left">
+      <span style="color: #999;">关键字搜索：</span>
+      <el-input style="width: 200px; display: inline-block;" [(ngModel)]="search" placeholder="请输入"></el-input>
+      <el-button (click)="getList()" [plain]="true" type="success">搜索</el-button>
+    </div>
+    <div class="right">
+      <el-button (click)="add()" size="mini" type="primary">添加</el-button>
+    </div>
+  </div>
+  <div class="viewMain" [el-loading]="loading" [text]="'拼命加载中'">
+    <div class="noData" *ngIf="!list.length">
+      <span>没有数据...</span>
+    </div>
+    <table class="zwTable">
+      <tr>
+        <th>登录名</th>
+        <th>用户名</th>
+        <th>状态</th>
+        <th>操作</th>
+      </tr>
+      <tr *ngFor="let item of list let i=index">
+        <td>{{item.login_name}}</td>
+        <td>{{item.user_name}}</td>
+        <td  class="el-tag-box">
+          <el-tag *ngIf="item.user_status==1" type="success">启用</el-tag>
+          <el-tag *ngIf="item.user_status!=1" type="warning">禁用</el-tag>
+        </td>
+
+        <td style="width: 180px; text-align: center;">
+          <el-button *ngIf="item.user_status==1" (click)="del(item,0)" size="mini" type="warning"
+                     icon="circle-close" [plain]="true">禁用
+          </el-button>
+          <el-button *ngIf="item.user_status!=1" (click)="del(item,1)" size="mini" type="primary" icon="circle-check"
+                     [plain]="true">启用
+          </el-button>
+          <el-button (click)="add(item)" size="mini" type="success" icon="edit" [plain]="true">编辑</el-button>
+        </td>
+      </tr>
+    </table>
+    <div class="pageBox">
+      <el-pagination *ngIf="total" [total]="total"
+                     [page-size]="pageSize"
+                     [(model)]="pageNum"
+                     (modelChange)="getList()"
+                     [layout]="['prev', 'pager', 'next', 'jumper', 'total']">
+      </el-pagination>
+    </div>
+
+  </div>
+</div>
+
+

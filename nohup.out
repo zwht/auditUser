@@ -18,3 +18,18 @@ Server started: http://localhost:8991/
 [HPM] Proxy created: /  ->  http://api.96789.ltd:8080/index.php
 [HPM] Proxy created: /  ->  http://idmanager-server-ip:9000
 Server started: http://localhost:8991/
+Error: Cannot find module 'html'
+    at Function.Module._resolveFilename (module.js:469:15)
+    at Function.Module._load (module.js:417:25)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at new View (/Users/zhaowei/projects/zw/auditUser/frontend/node_modules/express/lib/view.js:81:14)
+    at EventEmitter.render (/Users/zhaowei/projects/zw/auditUser/frontend/node_modules/express/lib/application.js:570:12)
+    at ServerResponse.render (/Users/zhaowei/projects/zw/auditUser/frontend/node_modules/express/lib/response.js:1008:7)
+    at /Users/zhaowei/projects/zw/auditUser/frontend/build-server.js:23:7
+    at Layer.handle [as handle_request] (/Users/zhaowei/projects/zw/auditUser/frontend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/Users/zhaowei/projects/zw/auditUser/frontend/node_modules/express/lib/router/route.js:137:13)
+[HPM] Proxy created: /  ->  http://localhost:8080/index.php
+[HPM] Proxy created: /  ->  http://idmanager-server-ip:9000
+Server started: http://localhost:8999/
+[HPM] Error occurred while trying to proxy request /api/login from localhost:8999 to http://localhost:8080/index.php (ECONNREFUSED) (https://nodejs.org/api/errors.html#errors_common_system_errors)

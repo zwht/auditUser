@@ -1,9 +1,10 @@
-.zwTable{ border: 1px solid @borderColor; width: 100%;  border-left: none;
+.zwTable{border-collapse: collapse; border: 1px solid @borderColor; width: 100%;  border-left: none;
   border-bottom: none;  border-collapse: collapse; background: @white; color:@color1;
-  td,th{ border-left: 1px solid @borderColor; border-bottom: 1px solid @borderColor; }
+  td,th{  }
   th{text-align: center; height: 50px; font-weight: bold; background: @white;}
-  td{ padding: 6px; }
+  td{ padding: 6px;border:1px solid @borderColor; }
 }
+
 
 .zwSearch{clear: both; padding-bottom: 20px;
   &:after { content: " "; height: 0; width: 0; visibility: hidden;

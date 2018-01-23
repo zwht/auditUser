@@ -28,10 +28,12 @@ export class ClientListComponent implements OnInit {
               private router: Router) {
     this.printStyle =
       `.printBody{display: block;}
-             th, td {
-                 color: black !important;
-             }
-             `;
+      .zwTable{border-collapse: collapse; border: 1px solid #000; width: 100%;}
+      th{text-align: center; height: 50px; font-weight: bold; background: #fff;}
+      td{ padding: 6px;border:1px solid #000; height:50px; }
+      p{ text-align: right; margin-top: 20px;}
+      p span{ display: inline-block; width: 50px;}
+      `;
   }
 
 

@@ -6,6 +6,7 @@ import {LogListComponent} from './component/log-list/log-list.component';
 import {RouterInterceptorService} from '../common/service/RouterInterceptorService'
 import {ClientAddComponent} from './component/client-add/client-add.component';
 import {UserDetailComponent} from './component/user-detail/user-detail.component';
+import {PrintComponent} from './component/print/print.component';
 
 
 export const mainRoutes = [
@@ -36,6 +37,11 @@ export const mainRoutes = [
         data: {name: '客户添加'}
       },
       {
+        path: 'client/print',
+        component: PrintComponent,
+        data: {name: '打印用户'}
+      },
+      {
         path: 'user/detail',
         component: UserDetailComponent,
         data: {name: '用户详情'}
@@ -58,4 +64,4 @@ export const mainRoutes = [
 
 ];
 
-export const mainComponentList = [UserDetailComponent, ClientAddComponent, LogListComponent, ClientListComponent, LoginComponent, NotFoundComponent, MenuComponent];
+export const mainComponentList = [PrintComponent,UserDetailComponent, ClientAddComponent, LogListComponent, ClientListComponent, LoginComponent, NotFoundComponent, MenuComponent];

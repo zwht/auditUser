@@ -29,6 +29,7 @@ export class LogListComponent implements OnInit {
 
   getList(key) {
     if(key) this.pageNum=1;
+    this.total=0;
     this.loading = true;
     (this.logService as any).list({
       pageNum: this.pageNum,

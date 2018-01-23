@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Injector} from '@angular/core';
 import {ClientService} from '../../../common/restService/ClientService';
 import {Router} from '@angular/router';
 import {ElMessageService} from 'element-angular'
@@ -9,6 +9,10 @@ import {ElMessageService} from 'element-angular'
   providers: [ClientService]
 })
 export class ClientListComponent implements OnInit {
+  printCSS: string[];
+  printStyle: string;
+  printBtnBoolean = true;
+  printItem = '';
   list = [];
   qdId = '';
   total = 0;
@@ -22,10 +26,31 @@ export class ClientListComponent implements OnInit {
   constructor(private clientService: ClientService,
               private message: ElMessageService,
               private router: Router) {
+    this.printStyle =
+      `.printBody{display: block;}
+             th, td {
+                 color: black !important;
+             }
+             `;
   }
+
 
   ngOnInit() {
     this.getList(0);
+  }
+
+  printComplete() {
+
+    this.printBtnBoolean = true;
+  }
+
+  beforePrint(item) {
+    this.printItem=item;
+    this.printBtnBoolean = false;
+  }
+
+  print(item){
+    this.router.navigate(['/admin/client/print'], {queryParams: {id: item ? item.id : ''}});
   }
 
   add(item) {
@@ -34,6 +59,7 @@ export class ClientListComponent implements OnInit {
 
   getList(key) {
     if (key) this.pageNum = 1;
+    this.total=0;
     this.loading = true;
     (this.clientService as any).list({
       pageNum: this.pageNum,

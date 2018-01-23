@@ -89,11 +89,12 @@ export class AddComponent implements OnInit {
 
 
   save() {
-    if(!this.user.login_pwd||!this.user.login_name||!this.user.user_type){
-      this.message.error('请输入内容！');
-      return
-    }
+
     if (this.user.id) {
+      if(!this.user.login_name){
+        this.message.error('请输入内容！');
+        return
+      }
       (this.userService as any).edit_user_info({
         id:this.user.id,
         user_name: this.user.user_name,
@@ -109,7 +110,10 @@ export class AddComponent implements OnInit {
           }
         });
     } else {
-
+      if(!this.user.login_pwd||!this.user.login_name||!this.user.user_type){
+        this.message.error('请输入内容！');
+        return
+      }
       if(this.user.login_pwd!=this.user.login_pwd1){
         this.message.error('两次密码不匹配');
         return;

@@ -46,6 +46,7 @@ export class ListComponent implements OnInit {
   getList(key) {
     if(key) this.pageNum=1;
     this.loading = true;
+    this.total=0;
     (this.userService as any).list({
       pageNum: this.pageNum,
       pageSize: this.pageSize,

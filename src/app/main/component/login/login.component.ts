@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit {
         if (rep.code == 0) {
           localStorage.setItem('userLoginName', this.login.name);
           localStorage.setItem('userName', rep.user_name);
+          localStorage.setItem('token', rep.token);
           localStorage.setItem('userType', rep.user_type);
           switch (rep.user_type) {
             case '1':

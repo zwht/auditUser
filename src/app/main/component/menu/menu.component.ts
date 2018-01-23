@@ -72,6 +72,8 @@ export class MenuComponent implements OnInit {
           });
         localStorage.removeItem('token');
         localStorage.removeItem('userName');
+        localStorage.removeItem('userType');
+        localStorage.removeItem('userLoginName');
         this.router.navigate(['/']);
         break;
       }

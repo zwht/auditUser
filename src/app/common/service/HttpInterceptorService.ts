@@ -75,7 +75,8 @@ export class HttpInterceptorService extends Http {
 
   intercept(observable: Observable<Response>): Observable<Response> {
     //console.log("after...");
-    return observable.catch((err, source) => {
+    observable.catch((err, source) => {
+      debugger
       if (err.status < 200 || err.status >= 300) {
         alert('网络错误:' + err.status + ' - ' + this.status['status.' + err.status]);
         return Observable.empty();
@@ -83,5 +84,6 @@ export class HttpInterceptorService extends Http {
         return Observable.throw(err);
       }
     });
+    return observable
   }
 }

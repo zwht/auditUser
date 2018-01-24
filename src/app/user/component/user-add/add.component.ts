@@ -17,7 +17,7 @@ export class AddComponent implements OnInit {
     login_pwd1:null,
     user_name: null,
     user_type: null,
-    user_status: 1
+    user_status: '1'
   };
   userTypeList = [
     {
@@ -36,11 +36,11 @@ export class AddComponent implements OnInit {
   statusList = [
     {
       name: '启用',
-      value: 1
+      value: '1'
     },
     {
       name: '禁用',
-      value: 0
+      value: '0'
     }
   ];
   title = '';
@@ -124,7 +124,7 @@ export class AddComponent implements OnInit {
         login_pwd: Md5.hashStr(this.user.login_pwd),
         user_name: this.user.user_name,
         user_type: this.user.user_type,
-        user_status: 0
+        user_status: 1
       })
         .then(response => {
           const rep = (response as any);

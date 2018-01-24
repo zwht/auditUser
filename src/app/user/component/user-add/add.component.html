@@ -11,19 +11,19 @@
 
       <div>
         <span>登&nbsp;录&nbsp;&nbsp;名：</span>
-        <el-input [elDisabled]="!!user.id" [(ngModel)]="user.login_name" placeholder="请输入登录名"></el-input>
+        <el-input [elDisabled]="!!user.id" [(model)]="user.login_name" placeholder="请输入登录名"></el-input>
       </div>
       <div *ngIf="!user.id">
         <span>密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：</span>
-        <el-input [(ngModel)]="user.login_pwd" placeholder="请输入密码" native-type="password"></el-input>
+        <el-input [(model)]="user.login_pwd" placeholder="请输入密码" native-type="password"></el-input>
       </div>
       <div *ngIf="!user.id">
         <span>重复密码：</span>
-        <el-input [(ngModel)]="user.login_pwd1" placeholder="请输入密码" native-type="password"></el-input>
+        <el-input [(model)]="user.login_pwd1" placeholder="请输入密码" native-type="password"></el-input>
       </div>
       <div>
         <span>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</span>
-        <el-input [(ngModel)]="user.user_name" placeholder="请输入用户名"></el-input>
+        <el-input [(model)]="user.user_name" placeholder="请输入用户名"></el-input>
       </div>
       <div *ngIf="user.id">
         <span>状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态：</span>

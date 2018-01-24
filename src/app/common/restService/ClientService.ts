@@ -38,7 +38,13 @@ export class ClientService {
       .then(response =>  response.json())
       .catch(HandleError);
   }
-
+  public subsidy_op(obj: Object, body: Object): Promise<void> {
+    return this.http.get(this.url + 'subsidy_op?id=' + (obj as any).id+
+      '&subsidy_name=' + (obj as any).subsidy_name)
+      .toPromise()
+      .then(response =>  response.json())
+      .catch(HandleError);
+  }
 
 
   public getById(id: String): Promise<void> {

@@ -15,6 +15,8 @@ export class ClientListComponent implements OnInit {
   printItem = '';
   list = [];
   qdId = '';
+  btId = '';
+  toggle1 = false;
   total = 0;
   toggle = false;
   search = '';
@@ -85,11 +87,30 @@ export class ClientListComponent implements OnInit {
     this.toggle = true;
     this.qdId = id;
   }
+  bt(item){
+    this.toggle1 = true;
+    this.btId = item.id;
+  }
+  qdBt(){
+    (this.clientService as any).subsidy_op({
+      id: this.btId,
+      subsidy_name: localStorage.getItem('userLoginName')
+    })
+      .then(response => {
+        this.toggle1 = false;
+        const rep = (response as any);
+        if (rep.code == 0) {
+          this.getList(0);
+        } else {
+          console.log(response);
+        }
+      });
+  }
 
   qd() {
     (this.clientService as any).verify({
       id: this.qdId,
-      op_name: localStorage.getItem('userName')
+      op_name: localStorage.getItem('userLoginName')
     })
       .then(response => {
         this.toggle = false;

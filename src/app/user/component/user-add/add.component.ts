@@ -124,7 +124,7 @@ export class AddComponent implements OnInit {
         login_pwd: Md5.hashStr(this.user.login_pwd),
         user_name: this.user.user_name,
         user_type: this.user.user_type,
-        user_status: 1
+        user_status: 0
       })
         .then(response => {
           const rep = (response as any);

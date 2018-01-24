@@ -19,7 +19,7 @@ export class ClientListComponent implements OnInit {
   toggle = false;
   search = '';
   pageNum = 1;
-  pageSize = 20;
+  pageSize = 16;
   loading = false;
   userType = localStorage.getItem('userType');
 

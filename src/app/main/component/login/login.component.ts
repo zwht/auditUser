@@ -50,17 +50,19 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('userName', rep.user_name);
           localStorage.setItem('token', rep.token);
           localStorage.setItem('userType', rep.user_type);
-          switch (rep.user_type) {
-            case '1':
-              this.router.navigateByUrl('/admin/client');
-              break;
-            case '0':
-              this.router.navigateByUrl('/admin/user/audit');
-              break;
-            case '2':
-              this.router.navigateByUrl('/admin/user/audit');
-              break;
-          }
+          setTimeout(()=>{
+            switch (rep.user_type) {
+              case '1':
+                this.router.navigateByUrl('/admin/client');
+                break;
+              case '0':
+                this.router.navigateByUrl('/admin/user/audit');
+                break;
+              case '2':
+                this.router.navigateByUrl('/admin/client');
+                break;
+            }
+          },100);
 
         } else if (rep.code == 10001) {
           this.message.error('账号密码不正确，或者账号已被停用');

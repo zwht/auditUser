@@ -13,7 +13,7 @@ export class ListComponent implements OnInit {
   search = '';
   pageNum = 1;
   userType = 2;
-  pageSize = 20;
+  pageSize = 16;
   loading = false;
 
   constructor(private userService: UserService,

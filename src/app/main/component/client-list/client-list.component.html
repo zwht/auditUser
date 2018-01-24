@@ -74,8 +74,8 @@
         <th>审核时间</th>
         <th>审核操作人</th>
         <th>是否属于补贴区域</th>
-        <th>是否已补贴</th>
-        <th>补贴操作人</th>
+        <th *ngIf="userType!=1">是否已补贴</th>
+        <th *ngIf="userType!=1">补贴操作人</th>
         <th>操作</th>
       </tr>
       <tr *ngFor="let item of list let i=index">
@@ -96,18 +96,19 @@
         <td>
           <span *ngIf="item.op_flag==1">属于</span>
         </td>
-        <td class="el-tag-box">
+        <td *ngIf="userType!=1" class="el-tag-box">
           <el-tag *ngIf="item.subsidy_flag==1&&item.op_flag==1" type="success">已补贴</el-tag>
         </td>
-        <td>{{item.subsidy_name}}</td>
+        <td *ngIf="userType!=1">{{item.subsidy_name}}</td>
         <td style="width: 180px; text-align: center;">
           <el-button *ngIf="item.op_flag!=1&&userType!=2" (click)="verify(item.id)" size="mini"  type="primary"
                      [plain]="true">审核通过</el-button>
-          <el-button *ngIf="item.op_flag==1&&userType!=2" (click)="bt(item)" size="mini"  type="success"
+          <el-button *ngIf="item.op_flag==1&&userType!=1&&item.subsidy_flag!=1" (click)="bt(item)" size="mini"
+                     type="success"
                      [plain]="true">确认补贴</el-button>
 
 
-          <essence-ng2-print *ngIf="item.op_flag==1"
+          <essence-ng2-print *ngIf="item.op_flag==1&&userType!=1"
             [mode]="'popup'"
             [popTitle]="''"
             [btnText]="'打印申请'"

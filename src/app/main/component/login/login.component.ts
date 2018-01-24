@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     const that=this;
+    $(document).unbind("keyup");
     $(document).keyup(function(event){
       if(event.keyCode ==13&&that.router.url==='/'){
         that.onLogin()
@@ -62,7 +63,7 @@ export class LoginComponent implements OnInit {
                 this.router.navigateByUrl('/admin/client');
                 break;
             }
-          },100);
+          },400);
 
         } else if (rep.code == 10001) {
           this.message.error('账号密码不正确，或者账号已被停用');

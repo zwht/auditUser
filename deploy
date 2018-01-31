@@ -37,19 +37,19 @@ cnpm install
 npm run build
 echo "============运行==================="
 
-name=$(lsof -i:8999|tail -1|awk '"$1"!=""{print $2}')
+name=$(lsof -i:8080|tail -1|awk '"$1"!=""{print $2}')
 if [ -z $name ]
 then
     nohup node build-server &
     #node app
-    echo "Server started: http://localhost:8999"
+    echo "Server started: http://localhost:8080"
     exit 0
 else
-    id=$(lsof -i:8999|tail -1|awk '"$1"!=""{print $2}')
+    id=$(lsof -i:8080|tail -1|awk '"$1"!=""{print $2}')
     kill -9 $id
     echo "Process name=$name($id) kill!"
     nohup node build-server &
-    echo "Server started: http://localhost:8999"
+    echo "Server started: http://localhost:8080"
     exit 0
 fi
 

@@ -7,6 +7,7 @@ import {RouterInterceptorService} from '../common/service/RouterInterceptorServi
 import {ClientAddComponent} from './component/client-add/client-add.component';
 import {UserDetailComponent} from './component/user-detail/user-detail.component';
 import {PrintComponent} from './component/print/print.component';
+import {UploadComponent} from './component/upload/upload.component';
 
 
 export const mainRoutes = [
@@ -52,6 +53,13 @@ export const mainRoutes = [
         data: {name: '日志管理', menu: true,
           type: [0]
         }
+      },
+      {
+        path: 'upload',
+        component: UploadComponent,
+        data: {name: '上传数据', menu: true,
+          type: [0]
+        }
       }
     ],
     canActivate: [RouterInterceptorService]
@@ -64,4 +72,4 @@ export const mainRoutes = [
 
 ];
 
-export const mainComponentList = [PrintComponent,UserDetailComponent, ClientAddComponent, LogListComponent, ClientListComponent, LoginComponent, NotFoundComponent, MenuComponent];
+export const mainComponentList = [UploadComponent,PrintComponent,UserDetailComponent, ClientAddComponent, LogListComponent, ClientListComponent, LoginComponent, NotFoundComponent, MenuComponent];

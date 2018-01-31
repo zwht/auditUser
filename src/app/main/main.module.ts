@@ -7,7 +7,7 @@ import { ElModule } from 'element-angular';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '../common/shared.module';
 import {RouterInterceptorService} from '../common/service/RouterInterceptorService'
-
+import { FileUploadModule } from '../ng2-file-upload';
 
 import {AppComponent} from './component/app/app.component';
 import {mainRoutes, mainComponentList} from './main.routes';
@@ -16,6 +16,7 @@ import {mainRoutes, mainComponentList} from './main.routes';
 @NgModule({
   declarations: [].concat([AppComponent], mainComponentList),
   imports: [
+    FileUploadModule,
     ElModule.forRoot(),
     BrowserModule,
     NoopAnimationsModule,

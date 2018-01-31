@@ -1,0 +1,35 @@
+<div class="upload viewBox">
+  <div class="zwSearch">
+    <div>
+
+    </div>
+    <div class="right">
+      <el-button type="primary">
+        下载模板
+      </el-button>
+    </div>
+  </div>
+  <div class="viewMain" [el-loading]="loading" [text]="'上传中...'">
+    <span id="fk">
+      <el-button  [plain]="true" type="success">添加文件</el-button>
+    </span>
+    <el-button (click)="save()" [plain]="true" type="primary">开始上传</el-button>
+
+    <input style="top: -9999px; position: absolute;" id="file" type="file" ng2FileSelect [uploader]="uploader"
+           (change)="selectedFileOnChanged($event)"
+           multiple />
+    <ul class="ul clear">
+      <li *ngFor="let item of uploader.queue let i=index">
+        <h3>{{item.file.name}}</h3>
+        <p>{{item.file.size/1000}}kb</p>
+        <div class="close" (click)="close(item)">
+          <i class="el-icon-close"></i>
+        </div>
+        <p *ngIf="item.error" style="color: #c00; font-size: 10px;">{{item.error}}</p>
+        <p *ngIf="item.success" style="color: #00d1c5; font-size: 10px;">{{item.error}}>上传成功</p>
+      </li>
+
+    </ul>
+  </div>
+</div>
+

@@ -36,7 +36,7 @@ import {UploadComponent} from './component/upload/upload.component';
     FormsModule,
     HttpModule,
     SharedModule,
-    RouterModule.forChild([
+    RouterModule.forRoot([
       {
         path: '',
         component: LoginComponent
@@ -96,7 +96,7 @@ import {UploadComponent} from './component/upload/upload.component';
         canActivate: [RouterInterceptorService]
       }
 
-    ])
+    ], {useHash: true})
   ],
   providers: [RouterInterceptorService],
   bootstrap: [AppComponent]

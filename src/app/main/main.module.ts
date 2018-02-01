@@ -10,7 +10,6 @@ import {RouterInterceptorService} from '../common/service/RouterInterceptorServi
 import { FileUploadModule } from '../ng2-file-upload';
 
 import {AppComponent} from './component/app/app.component';
-// import {MainRoutes, MainComponents} from './main.routes';
 
 import {LoginComponent} from './component/login/login.component';
 import {NotFoundComponent} from './component/not-found/not-found.component';

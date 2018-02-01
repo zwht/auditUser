@@ -12,7 +12,16 @@ export class ClientListComponent implements OnInit {
   printCSS: string[];
   printStyle: string;
   printBtnBoolean = true;
-  printItem = '';
+  printItem = {
+    id:null,
+    contact:null,
+    address:null,
+    idcard:null,
+    contacttel:null,
+    licenseplate:null,
+    cartype:null
+
+  };
   list = [];
   qdId = '';
   btId = '';

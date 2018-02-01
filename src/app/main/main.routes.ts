@@ -1,3 +1,6 @@
+import {RouterModule, Routes} from '@angular/router';
+import {NgModule} from '@angular/core';
+
 import {LoginComponent} from './component/login/login.component';
 import {NotFoundComponent} from './component/not-found/not-found.component';
 import {MenuComponent} from './component/menu/menu.component';
@@ -10,7 +13,7 @@ import {PrintComponent} from './component/print/print.component';
 import {UploadComponent} from './component/upload/upload.component';
 
 
-export const mainRoutes = [
+export const routes: Routes = [
   {
     path: '',
     component: LoginComponent
@@ -72,4 +75,19 @@ export const mainRoutes = [
 
 ];
 
-export const mainComponentList = [UploadComponent,PrintComponent,UserDetailComponent, ClientAddComponent, LogListComponent, ClientListComponent, LoginComponent, NotFoundComponent, MenuComponent];
+@NgModule({
+  imports: [
+    RouterModule.forChild(routes)
+  ],
+  exports: [RouterModule]
+})
+export class MainRoutes {
+}
+
+export const MainComponents = [
+  UploadComponent,PrintComponent,UserDetailComponent,
+  ClientAddComponent, LogListComponent,
+  ClientListComponent, LoginComponent,
+  NotFoundComponent, MenuComponent
+];
+export const MainList = routes;

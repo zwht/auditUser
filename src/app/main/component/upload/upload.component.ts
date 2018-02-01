@@ -75,7 +75,7 @@ export class UploadComponent implements OnInit {
     this.uploader.uploadAll();
   }
 
-  selectedFileOnChanged() {
+  selectedFileOnChanged(e) {
 
   }
 

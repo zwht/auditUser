@@ -12,6 +12,7 @@ import {FileService} from '../../../common/restService/FileService';
 export class CropperImgComponent implements OnInit {
   private boxStyle;
   private cpImg;
+  cpImgFk;
   loading = false;
   dialog = false;
   cropper = {};
@@ -30,6 +31,7 @@ export class CropperImgComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.cpImgFk=this.cpImg;
     if (this.boxStyle) {
       this.boxStyle.width = this.boxStyle.width ? this.boxStyle.width : 200;
       this.boxStyle.height = this.boxStyle.height ? this.boxStyle.height : 200;

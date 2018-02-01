@@ -1,9 +1,9 @@
 <div class="cropperImg">
-  <div class="showImg" [style.display]="cpImg?'block':'none'" (click)="showDialog()">
+  <div class="showImg" [style.display]="cpImgFk?'block':'none'" (click)="showDialog()">
     <p>重新选择图片</p>
-    <img  [src]="cpImg" alt="">
+    <img  [src]="cpImgFk" alt="">
   </div>
-  <button [style.display]="cpImg?'none':'block'" (click)="showDialog()" >选择图片</button>
+  <button [style.display]="cpImgFk?'none':'block'" (click)="showDialog()" >选择图片</button>
 
   <el-dialog [(visible)]="dialog"
              [close-on-click-modal]="false" class="">

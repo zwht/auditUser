@@ -31,7 +31,7 @@ export const routes: Routes = [
         path: 'list',
         component: ListComponent,
         data: {
-          name: '普通普通用户',
+          name: '普通用户',
           menu: true
         }
       },

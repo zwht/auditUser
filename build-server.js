@@ -8,7 +8,7 @@ var express = require('express');
 var proxyMiddleWare = require("http-proxy-middleware");
 
 var proxyPath = "http://api.96789.ltd:8080/index.php";//目标后端服务地址(公司同事电脑地址)
-//var proxyPath = "http://120.79.218.81/ums/index.php";
+var proxyPath = "http://120.79.218.81/ums/index.php";
 var proxyPath1 = "http://idmanager-server-ip:9000";//老版本地址
 var app = express();
 

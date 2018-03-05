@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../../common/restService/UserService';
+import {LocationService} from '../../../common/restService/LocationService';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {Md5} from "ts-md5/dist/md5";
 import { ElMessageService } from 'element-angular'
@@ -7,10 +8,11 @@ import { ElMessageService } from 'element-angular'
   selector: 'app-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.less'],
-  providers: [UserService]
+  providers: [UserService,LocationService]
 })
 export class AddComponent implements OnInit {
   user = {
+    location_id:null,
     id: null,
     login_name: null,
     login_pwd: null,
@@ -19,6 +21,7 @@ export class AddComponent implements OnInit {
     user_type: null,
     user_status: '1'
   };
+  locationList=[];
   userTypeList = [
     {
       name: '管理员',
@@ -48,10 +51,15 @@ export class AddComponent implements OnInit {
   constructor(private userService: UserService,
               private router: Router,
               private message: ElMessageService,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private locationService: LocationService) {
   }
 
   ngOnInit() {
+    this.locationService.getList({},{})
+      .then(response=>{
+        if(response.data&&response.data.length) this.locationList=response.data;
+      });
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.user.id = params['id'];
       if (this.user.id) {
@@ -99,7 +107,8 @@ export class AddComponent implements OnInit {
         id:this.user.id,
         user_name: this.user.user_name,
         user_type: this.user.user_type,
-        user_status: this.user.user_status
+        user_status: this.user.user_status,
+        location_id: this.user.location_id
       })
         .then(response => {
           const rep = (response as any);

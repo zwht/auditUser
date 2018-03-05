@@ -34,6 +34,15 @@
           </el-option>
         </el-select>
       </div>
+      <div>
+        <span>区&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;域：</span>
+        <el-select [(model)]="user.location_id" placeholder="请选择">
+          <el-option *ngFor="let item of locationList"
+                     [label]="item.location_name"
+                     [value]="item.id">
+          </el-option>
+        </el-select>
+      </div>
 
       <br>
       <el-button (click)="save()" [plain]="true" type="success">保存</el-button>

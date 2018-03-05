@@ -15,15 +15,16 @@ export class LocationService {
 
   // 添加
   public add(color): Promise<void> {
-    return this.http.post(this.url + 'add',
+    return this.http.post(this.url + 'add_location_info',
       $.param(color))
       .toPromise()
       .then(response => response.json())
       .catch(HandleError);
   }
 
+
   public list(obj: Object, body: Object): Promise<void> {
-    return this.http.get(this.url + 'find_data?page_number=' + (obj as any).pageNum+
+    return this.http.get(this.url + 'find_location?page_number=' + (obj as any).pageNum+
       '&page_size=' + (obj as any).pageSize+
       '&search_info=' + (obj as any).search)
       .toPromise()
@@ -31,31 +32,16 @@ export class LocationService {
       .catch(HandleError);
   }
 
-  public getList(obj: Object, body: Object): Promise<void> {
+  public getList(): Promise<void> {
     return this.http.get(this.url + 'get_location_list')
       .toPromise()
       .then(response =>  response.json())
       .catch(HandleError);
   }
 
-  public subsidy_op(obj: Object, body: Object): Promise<void> {
-    return this.http.get(this.url + 'subsidy_op?id=' + (obj as any).id+
-      '&subsidy_name=' + (obj as any).subsidy_name)
-      .toPromise()
-      .then(response =>  response.json())
-      .catch(HandleError);
-  }
-
-
-  public getById(id: String): Promise<void> {
-    return this.http.get(this.url + 'getById?id=' + id)
-      .toPromise()
-      .then(response => response.json())
-      .catch(HandleError);
-  }
 
   public update(color): Promise<void> {
-    return this.http.post(this.url + 'update',
+    return this.http.post(this.url + 'edit_location_info',
       $.param(color))
       .toPromise()
       .then(response => response.json())
@@ -63,7 +49,7 @@ export class LocationService {
   }
 
   public del(id: String): Promise<void> {
-    return this.http.get(this.url + 'del?id=' + id)
+    return this.http.get(this.url + 'del1?id=' + id)
       .toPromise()
       .then(response => response.json())
       .catch(HandleError);

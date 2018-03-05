@@ -20,13 +20,15 @@ import {ClientAddComponent} from './component/client-add/client-add.component';
 import {UserDetailComponent} from './component/user-detail/user-detail.component';
 import {PrintComponent} from './component/print/print.component';
 import {UploadComponent} from './component/upload/upload.component';
+import { LocationListComponent } from './component/location-list/location-list.component';
+import { LocationAddComponent } from './component/location-add/location-add.component';
 
 @NgModule({
   declarations: [AppComponent,
     UploadComponent,PrintComponent,UserDetailComponent,
     ClientAddComponent, LogListComponent,
     ClientListComponent, LoginComponent,
-    NotFoundComponent, MenuComponent
+    NotFoundComponent, MenuComponent, LocationListComponent, LocationAddComponent
   ],
   imports: [
     FileUploadModule,
@@ -52,6 +54,19 @@ import {UploadComponent} from './component/upload/upload.component';
               name: '系统用户管理', menu: true,
               type: [0]
             }
+          },
+          {
+            path: 'location',
+            component: LocationListComponent,
+            data: {
+              name: '区域管理', menu: true,
+              type: [0]
+            }
+          },
+          {
+            path: 'location/add',
+            component: LocationAddComponent,
+            data: {name: '区域添加'}
           },
           {
             path: 'client',

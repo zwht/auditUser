@@ -56,9 +56,9 @@ export class AddComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.locationService.getList({},{})
+    (this.locationService as any).getList()
       .then(response=>{
-        if(response.data&&response.data.length) this.locationList=response.data;
+         this.locationList=response.data;
       });
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.user.id = params['id'];

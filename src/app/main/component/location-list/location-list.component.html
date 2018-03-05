@@ -1,0 +1,51 @@
+<div class="clientList viewBox">
+  <div class="zwSearch">
+    <div style="float: left">
+      <span style="color: #999;">关键字搜索：</span>
+      <el-input style="width: 200px; display: inline-block;" [(ngModel)]="search" placeholder="请输入"></el-input>
+      <el-button (click)="getList(1)" [plain]="true" type="success">搜索</el-button>
+    </div>
+    <div class="right">
+      <el-button (click)="add(0)" size="mini" type="primary">添加</el-button>
+    </div>
+  </div>
+
+  <div class="viewMain"  [el-loading]="loading" [text]="'拼命加载中'">
+    <div class="noData" *ngIf="!list.length">
+      <span>没有数据...</span>
+    </div>
+    <table class="zwTable">
+      <tr>
+        <th>序号</th>
+        <th>区域名</th>
+        <th>id</th>
+        <th>创建时间</th>
+        <th>操作</th>
+      </tr>
+      <tr *ngFor="let item of list let i=index">
+        <td>{{i+1}}</td>
+        <td>{{item.location_name}}</td>
+        <td>{{item.id}}</td>
+        <td>{{item.create_time}}</td>
+
+        <td style="width: 180px; text-align: center;">
+          <el-button (click)="add(item)" size="mini"  type="primary"
+                     [plain]="true">编辑</el-button>
+          <el-button (click)="del(item)" size="mini"  type="warning"
+                     [plain]="true">删除</el-button>
+        </td>
+      </tr>
+    </table>
+    <div class="pageBox">
+      <el-pagination *ngIf="total" [total]="total"
+                     [page-size]="pageSize"
+                     [(model)]="pageNum"
+                     (modelChange)="getList(0)"
+                     [layout]="['prev', 'pager', 'next', 'jumper', 'total']">
+      </el-pagination>
+    </div>
+
+  </div>
+</div>
+
+

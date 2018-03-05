@@ -1,12 +1,20 @@
 <div class="clientList viewBox">
   <div class="zwSearch">
-    <div>
+    <div style="float: left">
       <span style="color: #999;">关键字搜索：</span>
       <el-input style="width: 200px; display: inline-block;" [(ngModel)]="search" placeholder="请输入"></el-input>
       <el-button (click)="getList(1)" [plain]="true" type="success">搜索</el-button>
     </div>
     <div class="right">
-      <!--<el-button *ngIf="userType!=2" (click)="add()" size="mini" type="primary">添加</el-button>--></div>
+      <span>开始时间</span>
+      <el-date-picker style="display: inline-block" [(model)]="beginTime"
+                      [format]="'yyyy年MM月dd日'"></el-date-picker>
+      <span>截至时间</span>
+      <el-date-picker style="display: inline-block" [(model)]="endTime"
+                      [format]="'yyyy年MM月dd日'"></el-date-picker>
+      <el-button (click)="getExportInfoList()" size="mini" type="primary">
+        下载已补贴
+      </el-button></div>
   </div>
   <div class="printBody" #print_div>
     <h1 style="text-align: center">《观山湖区"万物互联"安装补贴申请表》</h1>
@@ -66,9 +74,9 @@
         <th>用户住址</th>
         <th>身份证</th>
         <th>车主电话</th>
-        <th>品牌</th>
+        <!--<th>品牌</th>
         <th>车辆类型</th>
-        <th>颜色</th>
+        <th>颜色</th>-->
         <th>车牌号</th>
         <th>审核状态</th>
         <th>审核时间</th>
@@ -83,9 +91,9 @@
         <td>{{item.address}}</td>
         <td>{{item.idcard}}</td>
         <td>{{item.contacttel}}</td>
-        <td>{{item.brand}}</td>
+        <!--<td>{{item.brand}}</td>
         <td>{{item.cartype}}</td>
-        <td>{{item.color}}</td>
+        <td>{{item.color}}</td>-->
         <td>{{item.licenseplate}}</td>
         <td class="el-tag-box">
           <el-tag *ngIf="item.op_flag==1" type="success">已审核</el-tag>

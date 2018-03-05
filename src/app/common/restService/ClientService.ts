@@ -69,4 +69,12 @@ export class ClientService {
       .catch(HandleError);
   }
 
+  public exportInfoList(item): Promise<void> {
+    return this.http.get(this.url + 'export_info_list?begin_time=' + item.beginTime+
+    '&end_time='+item.endTime)
+      .toPromise()
+      .then(response => response.json())
+      .catch(HandleError);
+  }
+
 }

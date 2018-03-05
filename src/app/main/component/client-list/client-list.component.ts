@@ -2,6 +2,7 @@ import {Component, OnInit, Injector} from '@angular/core';
 import {ClientService} from '../../../common/restService/ClientService';
 import {Router} from '@angular/router';
 import {ElMessageService} from 'element-angular'
+import {DateSet} from '../../../common/service/DateSet';
 @Component({
   selector: 'app-client-list',
   templateUrl: './client-list.component.html',
@@ -9,6 +10,8 @@ import {ElMessageService} from 'element-angular'
   providers: [ClientService]
 })
 export class ClientListComponent implements OnInit {
+  beginTime=new Date(2010,1,1);
+  endTime=new Date();
   printCSS: string[];
   printStyle: string;
   printBtnBoolean = true;
@@ -36,7 +39,8 @@ export class ClientListComponent implements OnInit {
 
   constructor(private clientService: ClientService,
               private message: ElMessageService,
-              private router: Router) {
+              private router: Router,
+              private dateSet: DateSet) {
     this.printStyle =
       `.printBody{display: block;}
       .zwTable{border-collapse: collapse; border: 1px solid #000; width: 100%;}
@@ -50,6 +54,31 @@ export class ClientListComponent implements OnInit {
 
   ngOnInit() {
     this.getList(0);
+  }
+
+  getExportInfoList(){
+    //export_info_list
+    let endTime=this.dateSet.getDate1(this.endTime);
+    let beginTime=this.dateSet.getDate1(this.beginTime);
+    if(endTime<=beginTime){
+      this.message.error('开始时间不能大于等于截至时间！');
+      return
+    }
+    (this.clientService as any).exportInfoList({
+      endTime: endTime,
+      beginTime: beginTime
+    }, {})
+      .then(response => {
+        this.loading = false;
+        const rep = (response as any);
+        if (rep.code == 0) {
+          this.total = response.total_number;
+          this.list = response.data;
+
+        } else {
+          console.log(response);
+        }
+      });
   }
 
   printComplete() {

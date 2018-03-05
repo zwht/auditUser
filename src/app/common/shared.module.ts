@@ -4,6 +4,7 @@ import {CommonModule} from '@angular/common';
 import {ElModule} from 'element-angular';
 import {CropperImgComponent} from './components/cropper-img/cropper-img.component';
 import {EssenceNg2PrintModule} from "essence-ng2-print";
+import {DateSet} from './service/DateSet';
 // 拦截器代码
 import {Http, XHRBackend, RequestOptions} from '@angular/http';
 import {HttpInterceptorService} from './service/HttpInterceptorService';
@@ -12,12 +13,15 @@ export function interceptorFactory(xhrBackend: XHRBackend, requestOptions: Reque
 }
 @NgModule({
   imports: [
+
     CommonModule,
     ElModule.forRoot()
   ],
   declarations: [CropperImgComponent],
   exports: [CropperImgComponent,EssenceNg2PrintModule],
-  providers: [HttpInterceptorService,
+  providers: [
+    DateSet,
+    HttpInterceptorService,
     {
       provide: Http,
       useFactory: interceptorFactory,

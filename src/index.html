@@ -4,7 +4,21 @@
   <meta charset="utf-8">
   <title>用户审核系统</title>
   <base href="/">
+  <script type="text/javascript" src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+  <script type="text/javascript">
 
+    (function setIp() {
+      if (returnCitySN) {
+        document.cookie = "ip=" + returnCitySN.cip;
+        document.cookie ="ipName=" + returnCitySN.cname;
+      } else {
+        setTimeout(function () {
+          setIp();
+        }, 100)
+      }
+    })()
+
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>

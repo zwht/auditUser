@@ -64,7 +64,11 @@ export class ClientListComponent implements OnInit {
       this.message.error('开始时间不能大于等于截至时间！');
       return
     }
-    (this.clientService as any).exportInfoList({
+
+    let a=$('<a>');
+    a.attr({target:'_blank',href:"/api/export_info_list?begin_time="+beginTime+"&end_time="+beginTime+"&token="+localStorage.getItem('token')})
+    a[0].click();
+    /*(this.clientService as any).exportInfoList({
       endTime: endTime,
       beginTime: beginTime
     }, {})
@@ -78,7 +82,7 @@ export class ClientListComponent implements OnInit {
         } else {
           console.log(response);
         }
-      });
+      });*/
   }
 
   printComplete() {

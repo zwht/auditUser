@@ -21,6 +21,13 @@ export class ClientService {
       .then(response => response.json())
       .catch(HandleError);
   }
+  public editAddess(color): Promise<void> {
+    return this.http.post(this.url + 'edit_vehicle_location_id',
+      $.param(color))
+      .toPromise()
+      .then(response => response.json())
+      .catch(HandleError);
+  }
 
   public list(obj: Object, body: Object): Promise<void> {
     return this.http.get(this.url + 'find_data?page_number=' + (obj as any).pageNum+

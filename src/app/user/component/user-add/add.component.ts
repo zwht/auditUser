@@ -12,7 +12,7 @@ import { ElMessageService } from 'element-angular'
 })
 export class AddComponent implements OnInit {
   user = {
-    location_id:null,
+    location_id:0,
     id: null,
     login_name: null,
     login_pwd: null,

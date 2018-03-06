@@ -17,12 +17,14 @@
       <tr>
         <th>登录名</th>
         <th>用户名</th>
+        <th>所属区域</th>
         <th>状态</th>
         <th>操作</th>
       </tr>
       <tr *ngFor="let item of list let i=index">
         <td>{{item.login_name}}</td>
         <td>{{item.user_name}}</td>
+        <td>{{item.location_name}}</td>
         <td  class="el-tag-box">
           <el-tag *ngIf="item.user_status==1" type="success">启用</el-tag>
           <el-tag *ngIf="item.user_status!=1" type="warning">禁用</el-tag>

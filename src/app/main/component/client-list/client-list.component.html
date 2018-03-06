@@ -109,8 +109,8 @@
         </td>
         <td *ngIf="userType!=1">{{item.subsidy_name}}</td>
         <td style="width: 280px; text-align: center;">
-          <el-button *ngIf="userType!=2" (click)="editAdess(item)" size="mini"  type="primary"
-                     [plain]="true">修改住址</el-button>
+          <el-button *ngIf="userType!=2&&item.op_flag!=1" (click)="editAdess(item)" size="mini"  type="success"
+                     [plain]="true">修改区域</el-button>
           <el-button *ngIf="item.op_flag!=1&&userType!=2" (click)="verify(item.id)" size="mini"  type="primary"
                      [plain]="true">审核通过</el-button>
           <el-button *ngIf="item.op_flag==1&&userType!=1&&item.subsidy_flag!=1" (click)="bt(item)" size="mini"

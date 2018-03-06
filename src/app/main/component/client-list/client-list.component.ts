@@ -18,8 +18,11 @@ export class ClientListComponent implements OnInit {
   };
   locationList=[];
   toggle3=false;
+
   beginTime=new Date(2010,1,1);
   endTime=new Date();
+
+
   printCSS: string[];
   printStyle: string;
   printBtnBoolean = true;
@@ -67,6 +70,7 @@ export class ClientListComponent implements OnInit {
         this.locationList=response.data;
       });
     this.getList(0);
+	  this.beginTime=new Date(this.endTime.getFullYear(),this.endTime.getMonth(),1);
   }
 
   getExportInfoList(){

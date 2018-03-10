@@ -11,6 +11,8 @@ import { ElMessageService } from 'element-angular'
   providers: [UserService,LocationService]
 })
 export class AddComponent implements OnInit {
+	toggle1=false;
+	password="";
   user = {
     location_id:0,
     id: null,
@@ -96,6 +98,9 @@ export class AddComponent implements OnInit {
   }
 
 
+	qdBt(){
+		window.history.back()
+	}
   save() {
 
     if (this.user.id) {
@@ -119,18 +124,17 @@ export class AddComponent implements OnInit {
           }
         });
     } else {
-      if(!this.user.login_pwd||!this.user.login_name||!this.user.user_type){
+      if(!this.user.login_name||!this.user.user_type){
         this.message.error('请输入内容！');
         return
       }
-      if(this.user.login_pwd!=this.user.login_pwd1){
+      /*if(this.user.login_pwd!=this.user.login_pwd1){
         this.message.error('两次密码不匹配');
         return;
-      }
-      debugger;
+      }*/
       (this.userService as any).add({
         login_name: this.user.login_name,
-        login_pwd: Md5.hashStr(this.user.login_pwd),
+        //login_pwd: Md5.hashStr(this.user.login_pwd),
         user_name: this.user.user_name,
         user_type: this.user.user_type,
         user_status: 1
@@ -138,7 +142,8 @@ export class AddComponent implements OnInit {
         .then(response => {
           const rep = (response as any);
           if (rep.code == 0) {
-            window.history.back()
+          	this.toggle1=true;
+          	this.password=rep.password;
           } else if(rep.code == 10006){
             this.message.error('添加失败，登录名重复');
           }else {

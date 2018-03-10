@@ -13,14 +13,14 @@
         <span>登&nbsp;录&nbsp;&nbsp;名：</span>
         <el-input [elDisabled]="!!user.id" [(model)]="user.login_name" placeholder="请输入登录名"></el-input>
       </div>
-      <div *ngIf="!user.id">
+      <!--<div *ngIf="!user.id">
         <span>密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：</span>
         <el-input [(model)]="user.login_pwd" placeholder="请输入密码" native-type="password"></el-input>
       </div>
       <div *ngIf="!user.id">
         <span>重复密码：</span>
         <el-input [(model)]="user.login_pwd1" placeholder="请输入密码" native-type="password"></el-input>
-      </div>
+      </div>-->
       <div>
         <span>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</span>
         <el-input [(model)]="user.user_name" placeholder="请输入用户名"></el-input>
@@ -48,6 +48,20 @@
       <el-button (click)="save()" [plain]="true" type="success">保存</el-button>
     </div>
   </div>
+  <el-dialog [(visible)]="toggle1" custom-class="tagBox"
+             [center]="true" [show-close]="false" [width]="'300px'">
+    <ng-template #title style="padding-top: 10px;">
+      <span class="el-icon-warning"></span>
+      <span>添加成功</span>
+    </ng-template>
+    <div>
+      <p>登录名：{{user.login_name}}</p>
+      <p>用户密码：{{password}}</p>
+    </div>
+    <ng-template #footer style="padding-bottom: 10px;">
+      <el-button (click)="qdBt()" [plain]="true" type="success" size="small">确&nbsp;&nbsp;&nbsp;&nbsp;定</el-button>
+    </ng-template>
+  </el-dialog>
 </div>
 
 

@@ -82,10 +82,10 @@ export class ClientListComponent implements OnInit {
       return
     }
 
-    let a=$('<a>');
+    /*let a=$('<a>');
     a.attr({target:'_blank',href:"/api/export_info_list?begin_time="+beginTime+"&end_time="+endTime+"&token="+localStorage.getItem('token')})
-    a[0].click();
-    /*(this.clientService as any).exportInfoList({
+    a[0].click();*/
+    (this.clientService as any).exportInfoList({
       endTime: endTime,
       beginTime: beginTime
     }, {})
@@ -99,7 +99,7 @@ export class ClientListComponent implements OnInit {
         } else {
           console.log(response);
         }
-      });*/
+      });
   }
 
   editAdess(item){

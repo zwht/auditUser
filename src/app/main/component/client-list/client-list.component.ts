@@ -92,13 +92,14 @@ export class ClientListComponent implements OnInit {
       .then(response => {
         this.loading = false;
         const rep = (response as any);
-        if (rep.code == 0) {
-          this.total = response.total_number;
-          this.list = response.data;
+	      if(rep.download_link){
+		      let a=$('<a>');
+		      a.attr({target:'_blank',href:rep.download_link+localStorage.getItem('token')})
+		      a[0].click();
+	      }else{
+		      this.message.error('没有数据！');
+	      }
 
-        } else {
-          console.log(response);
-        }
       });
   }
 

@@ -94,7 +94,7 @@ export class ClientListComponent implements OnInit {
         const rep = (response as any);
 	      if(rep.download_link){
 		      let a=$('<a>');
-		      a.attr({target:'_blank',href:rep.download_link+localStorage.getItem('token')})
+		      a.attr({target:'_blank',href:rep.download_link})
 		      a[0].click();
 	      }else{
 		      this.message.error('没有数据！');

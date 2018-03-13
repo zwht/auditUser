@@ -101,10 +101,12 @@ export class AddComponent implements OnInit {
 				const rep = (response as any);
 				if (rep.code == 0) {
 					this.user = rep;
-					this.locations=this.user['location_id'].split(',');
-					this.locations=this.locations.map(function (iem) {
+
+					let aa=this.user['location_id'].split(',');
+					 this.locations=aa.map(function (iem) {
 						return {id:iem};
 					});
+					debugger
 				} else {
 				}
 			});

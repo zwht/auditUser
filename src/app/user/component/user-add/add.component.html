@@ -1,7 +1,7 @@
 <div class="addUser viewBox">
   <div class="zwSearch">
     <div class="left">
-      <span>{{title}}</span>
+      <span>{{title1}}</span>
     </div>
     <div class="right">
     </div>
@@ -34,18 +34,31 @@
           </el-option>
         </el-select>
       </div>
-      <div *ngIf="user.user_type!=0">
+      <div>
         <span>区&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;域：</span>
-        <el-select [(model)]="user.location_id" placeholder="请选择">
-          <el-option *ngFor="let item of locationList"
-                     [label]="item.location_name"
-                     [value]="item.id">
-          </el-option>
-        </el-select>
+        <ul  *ngIf="user.user_type!=0">
+          <li *ngFor="let obj of locations let i=index">
+            <el-select [(model)]="obj.id" placeholder="请选择">
+              <el-option *ngFor="let item of locationList"
+                         [label]="item.location_name"
+                         [value]="item.id">
+              </el-option>
+            </el-select>
+            <span *ngIf="locations.length>=2">
+              <el-button  (click)="del(i)" [plain]="true" type="success">-</el-button>
+            </span>
+          </li>
+          <li class="addBtn"  *ngIf="locations.length<=2">
+            <el-button (click)="add()" [plain]="true" type="success">+</el-button>
+          </li>
+
+        </ul>
       </div>
 
+
+
       <br>
-      <el-button (click)="save()" [plain]="true" type="success">保存</el-button>
+      <el-button class="save" (click)="save()" [plain]="true" type="success">保存</el-button>
     </div>
   </div>
   <el-dialog [(visible)]="toggle1" custom-class="tagBox"

@@ -34,9 +34,9 @@
           </el-option>
         </el-select>
       </div>
-      <div>
+      <div *ngIf="user.user_type!=0">
         <span>区&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;域：</span>
-        <ul  *ngIf="user.user_type!=0">
+        <ul>
           <li *ngFor="let obj of locations let i=index">
             <el-select [(model)]="obj.id" placeholder="请选择">
               <el-option *ngFor="let item of locationList"

@@ -24,20 +24,6 @@ export class AddComponent implements OnInit {
 		user_status: '1'
 	};
 	locationList = [];
-	userTypeList = [
-		{
-			name: '管理员',
-			value: 0
-		},
-		{
-			name: '审核员',
-			value: 1
-		},
-		{
-			name: '普通人员',
-			value: 2
-		}
-	];
 	statusList = [
 		{
 			name: '启用',
@@ -62,6 +48,7 @@ export class AddComponent implements OnInit {
 		(this.locationService as any).getList()
 			.then(response => {
 				this.locationList = response.data;
+				this.locationList.splice(this.locationList.length-1,1)
 			});
 		this.activatedRoute.queryParams.subscribe((params: Params) => {
 			this.user.id = params['id'];
@@ -106,7 +93,6 @@ export class AddComponent implements OnInit {
 					 this.locations=aa.map(function (iem) {
 						return {id:iem};
 					});
-					debugger
 				} else {
 				}
 			});
@@ -118,30 +104,34 @@ export class AddComponent implements OnInit {
 	}
 
 	save() {
-
-		let ar=[];
-		let key=false;
 		let loc = '';
-		this.locations.forEach((obj, i) => {
-			ar.forEach(item=>{
-				if(item.id==obj.id){
-					key=true;
+		if(this.user.user_type==0){
+			loc = '0';
+		}else{
+			let ar=[];
+			let key='';
+			this.locations.forEach((obj, i) => {
+				ar.forEach(item=>{
+					if(item.id==obj.id){
+						key='不能重复选择区域！';
+					}
+				});
+				ar.push(obj);
+				if(!obj.id){
+					key='请选择区域！';
+				}
+				if (i == this.locations.length - 1) {
+					loc += obj.id;
+				} else {
+					loc += obj.id + ',';
 				}
 			});
-			ar.push(obj);
-			if (i == this.locations.length - 1) {
-				loc += obj.id;
-			} else {
-				loc += obj.id + ',';
+			if(key){
+				this.message.error(key);
+				return;
 			}
-		});
-		if (!loc) {
-			loc = '0';
 		}
-		if(key){
-			this.message.error('不能重复选择区域！');
-			return;
-		}
+
 		if (this.user.id) {
 			if (!this.user.login_name) {
 				this.message.error('请输入内容！');

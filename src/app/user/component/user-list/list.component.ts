@@ -71,7 +71,8 @@ export class ListComponent implements OnInit {
       user_status: key,
       id: item.id,
       user_name: item.user_name,
-      user_type: item.user_type
+      user_type: item.user_type,
+	    location_id: item.location_id,
     })
       .then(response => {
         const rep = (response as any);
